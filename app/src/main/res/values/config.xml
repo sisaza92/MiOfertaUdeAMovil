@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="SERVICE_IP_HOST">"127.0.0.1"</string>
+    <string name="SERVICE_PORT">"8084"</string>
+    <string name="CONTEXT_PATH"></string>
+
+</resources>
