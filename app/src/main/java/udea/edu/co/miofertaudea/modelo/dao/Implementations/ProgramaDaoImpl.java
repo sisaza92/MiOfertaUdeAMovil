@@ -23,10 +23,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
     DbHelper dbHelper;
     SQLiteDatabase db;
 
-    /**
-     * metodo encargado de almacenar una lista de programas dados en la base de datos
-     * @param programas
-     */
+
     @Override
     public void saveProgramas(List<Programa> programas) {
 
@@ -56,10 +53,6 @@ public class ProgramaDaoImpl implements ProgramaDao {
 
     }
 
-    /**
-     * metodo usado para obtener la lista de programas que se encuentran en la base de datos
-     * @return materiasOfertadas
-     */
     @Override
     public List<Programa> getProgramas() {
 
@@ -91,7 +84,6 @@ public class ProgramaDaoImpl implements ProgramaDao {
                 materiasOfertadas.add(programa);
             }
         }
-        db.close();
         return materiasOfertadas;
     }
 }
