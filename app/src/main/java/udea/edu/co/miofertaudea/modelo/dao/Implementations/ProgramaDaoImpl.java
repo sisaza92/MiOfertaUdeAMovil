@@ -58,8 +58,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
 
     /**
      * metodo usado para obtener la lista de programas que se encuentran en la base de datos
-     *
-     * @return
+     * @return materiasOfertadas
      */
     @Override
     public List<Programa> getProgramas() {
