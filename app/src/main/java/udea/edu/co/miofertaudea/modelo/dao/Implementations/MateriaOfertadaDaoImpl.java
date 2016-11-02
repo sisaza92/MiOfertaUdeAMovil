@@ -21,7 +21,6 @@ public class MateriaOfertadaDaoImpl implements MateriaOfertadaDao {
     DbHelper dbHelper;
     SQLiteDatabase db;
 
-
     @Override
     public void saveAllMaterias(List<MateriaOfertada> materiaOfertadas) {
 
