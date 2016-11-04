@@ -3,14 +3,15 @@ package udea.edu.co.miofertaudea.modelo.dao;
 /**
  * En esta clase se Colocan todas las constantes referentes a la base de datos como
  * el nombre de la misma, los nombres de sus tablas y columnas.
- * @author  Created by CristianCamilo on 10/10/2016.
+ * @author  Created by CristianCamilo.
  */
 public class Contract {
 
     public static final  String DB_NAME = "MiOfertaUdeA.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 3;
     public static final String TABLE_NAME_GRUPO = "grupo";
     public static final String TABLE_NAME_MATERIA_OFERTADA = "materiaOfertada";
+    public static final String TABLE_NAME_PROGRAMA = "programa";
 
 
     /**
@@ -39,5 +40,13 @@ public class Contract {
         public static final String MATERIA_OFERTADA_CREDITOS = "creditos";
         public static final String MATERIA_OFERTADA_GRUPO = "grupo";
         public static final String MATERIA_OFERTADA_HORARIO = "horario";
+
+        /**
+         * Constantes que especifican los nombres de las columnas de la tabla programa
+         */
+        public static final String PROGRAMA_CODIGO_PROGRAMA = "codigoPrograma";
+        public static final String PROGRAMA_NOMBRE_PROGRAMA = "nombrePrograma";
+        public static final String PROGRAMA_ESTADO = "estado";
+        public static final String PROGRAMA_ULTIMO_SEMESTRE = "ultimoSemestre";
     }
 }

@@ -1,8 +1,8 @@
  package udea.edu.co.miofertaudea.vista.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +13,17 @@ import java.util.ArrayList;
 import udea.edu.co.miofertaudea.R;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
+import udea.edu.co.miofertaudea.vista.activity.Oferta_Ppal;
 
-/**
+ /**
  * Created by Santiago on 02/11/2016.
  */
-public class ProgramaSpinnerAdapter extends ArrayAdapter<Programa>{
+public class ProgramaListAdapter extends ArrayAdapter<Programa>{
 
     private Activity activity;
     ArrayList<Programa> listaProgramas;
 
-    public ProgramaSpinnerAdapter(Activity activity, ArrayList<Programa> programas) {
+    public ProgramaListAdapter(Activity activity, ArrayList<Programa> programas) {
 
      super(activity, R.layout.item_programa);
         this.activity = activity;
@@ -43,6 +44,7 @@ public class ProgramaSpinnerAdapter extends ArrayAdapter<Programa>{
 
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
+        Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getView");
         View view = null;
         Programa programa  = listaProgramas.get(position);
         LayoutInflater inflador = activity.getLayoutInflater();
@@ -50,27 +52,31 @@ public class ProgramaSpinnerAdapter extends ArrayAdapter<Programa>{
         final ViewHolder viewHolder = new ViewHolder();
 
         // *** instanciamos a los recursos
-        viewHolder.infoPrograma = (TextView) view.findViewById(R.id.programa);
+        viewHolder.infoPrograma = (TextView) view.findViewById(R.id.textViewPrograma);
 
         // importante!!! establecemos el mensaje
         viewHolder.infoPrograma.setText(programa.toString());
-        view.setOnClickListener(getListener(position));
-        return view;
-    }
+
+    //escuchador de evento
+    view.setOnClickListener(getListener(position));
+    return view;
+}
 
     private View.OnClickListener getListener(final int position){
-        Log.d("REGISTRO -->","CLASE: ProgramaSpinnerAdapter, METODO: getListener");
+        Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener");
         View.OnClickListener listener = new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent listarProgramas = new Intent(getContext(),ServiceImpl.class);
+                Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
+                Intent listarProgramas = new Intent(getContext(), Oferta_Ppal.class);
                 String idPrograma = "" + listaProgramas.get(position).getCodigoPrograma();
                 listarProgramas.putExtra("idPrograma", idPrograma);
-                v.getContext().startService(listarProgramas);
+                //listarProgramas.putExtra("idEstudiante", idEstudiante);
+                v.getContext().startActivity(listarProgramas);
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
+
                 //v.setBackgroundResource(R.color.colorPrimaryDark);
-                Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
             }
         };
         return listener;

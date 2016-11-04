@@ -27,7 +27,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
     @Override
     public void saveProgramas(List<Programa> programas) {
 
-        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: saveMaterias");
+        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: saveProgramas");
         dbHelper = new DbHelper();//Instancia de DbHelper
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -56,13 +56,13 @@ public class ProgramaDaoImpl implements ProgramaDao {
     @Override
     public List<Programa> getProgramas() {
 
-        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: getMaterias");
+        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: getProgramas");
         dbHelper = new DbHelper();//Instancia de DbHelper
         db = dbHelper.getWritableDatabase();
 
-        List<Programa> materiasOfertadas = new ArrayList<>();
+        List<Programa> programas = new ArrayList<>();
 
-        Cursor cursor = db.query(Contract.TABLE_NAME_MATERIA_OFERTADA,null,null,null,null,null,null);
+        Cursor cursor = db.query(Contract.TABLE_NAME_PROGRAMA,null,null,null,null,null,null);
         int nroRegistros = cursor.getCount();
 
         if( nroRegistros > 0){
@@ -81,9 +81,11 @@ public class ProgramaDaoImpl implements ProgramaDao {
                 programa.setUltimoSemestre(cursor.getString(indxUltimoSemestre));
 
                 Log.d("CONSULTANDO", programa.toString());
-                materiasOfertadas.add(programa);
+                programas.add(programa);
             }
         }
-        return materiasOfertadas;
+        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: otro hijo de ramirez");
+
+        return programas;
     }
 }

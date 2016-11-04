@@ -9,7 +9,7 @@ import udea.edu.co.miofertaudea.util.ContextProvider;
 /**
  * Esta clase es la encargada de realizar operaciones de creacion  y actualizacion de las tablas
  * en la base de datos del dispositivo.
- * @author Created by CristianCamilo on 10/10/2016.
+ * @author Created by Santiago Ramirez.
  */
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -31,7 +31,8 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         Log.d("REGISTRO -->"," CLASE: DbHelper METODO: onCreate");
-        String sql=String
+
+        String sql1=String
                 .format("create table %s(%s int,%s text, %s int, %s text, %s text)",
                         Contract.TABLE_NAME_MATERIA_OFERTADA,
                         Contract.Column.MATERIA_OFERTADA_CODIGO_MATERIA,
@@ -40,9 +41,23 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.MATERIA_OFERTADA_GRUPO,
                         Contract.Column.MATERIA_OFERTADA_HORARIO
                 );
+
+        String sql2=String
+                .format("create table %s(%s int,%s text, %s text, %s text)",
+                        Contract.TABLE_NAME_PROGRAMA,
+                        Contract.Column.PROGRAMA_CODIGO_PROGRAMA,
+                        Contract.Column.PROGRAMA_NOMBRE_PROGRAMA,
+                        Contract.Column.PROGRAMA_ESTADO,
+                        Contract.Column.PROGRAMA_ULTIMO_SEMESTRE
+                );
+
         //Sentencia para crear tabla
-        Log.d(TAG, "onCreate with SQL: " + sql);
-        db.execSQL(sql);//Ejecución de la sentencia
+        Log.d(TAG, "onCreate with SQL: " + sql1);
+        db.execSQL(sql1);//Ejecución de la sentencia
+
+        //Sentencia para crear tabla Programa
+        Log.d(TAG, "onCreate with SQL: " + sql2);
+        db.execSQL(sql2);//Ejecución de la sentencia sql
 
 
     }
@@ -58,7 +73,9 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int NewVersion){
         Log.d("REGISTRO -->"," CLASE: DbHelper METODO: onUpgrade");
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_MATERIA_OFERTADA);//Borrar datos
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_PROGRAMA);//Borrar datos tabla programa
         onCreate(db);//Crear Tabla de nuevo
+
     }
 
 

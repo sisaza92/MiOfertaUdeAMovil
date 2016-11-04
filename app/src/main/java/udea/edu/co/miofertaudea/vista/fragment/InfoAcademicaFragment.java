@@ -23,7 +23,7 @@ public class InfoAcademicaFragment extends Fragment {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ABOVE, R.id.fragment_info_academica);
+        params.addRule(RelativeLayout.ABOVE, R.id.fragmet_info_academica);
         view.setLayoutParams(params);
         return view;
 

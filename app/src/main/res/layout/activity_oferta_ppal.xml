@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="udea.edu.co.miofertaudea.vista.fragment.InfoAcademicaFragment"
-        android:id="@+id/fragment_info_academica">
-
+        android:id="@+id/fragmet_info_academica">
+        n
     </fragment>
 
     <fragment

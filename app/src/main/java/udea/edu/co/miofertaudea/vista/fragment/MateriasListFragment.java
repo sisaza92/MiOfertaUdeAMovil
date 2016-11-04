@@ -22,7 +22,7 @@ public class MateriasListFragment extends Fragment {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, R.id.fragment_info_academica);
+        params.addRule(RelativeLayout.BELOW, R.id.info_academica);
         view.setLayoutParams(params);
 
 

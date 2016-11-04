@@ -15,8 +15,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
+import udea.edu.co.miofertaudea.modelo.dto.Programa;
 
 /**
  * En esta clase se define que acciones se realizarán cuando sea consumido un servicio, ademas de
@@ -52,6 +55,10 @@ public class ServiceImpl extends IntentService {
                     case "listarMaterias":
                         listarMaterias();
                         break;
+                    case "listarProgramas":
+                        listarProgramas();
+                        break;
+
                     case "":
 
                         break;
@@ -93,6 +100,34 @@ public class ServiceImpl extends IntentService {
                     Toast.makeText(ServiceImpl.this, "Fallo al Obtener las Materias", Toast.LENGTH_LONG).show();
                 }
             });
+    }
+
+    private void listarProgramas() {
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+        ServiceFactory.getClienteRest().obtenerProgramaYUltimoSemestre("101700", new Callback<List<Programa>>() {
+            @Override
+            public void success(List<Programa> programas, Response response) {
+                //TODO quitar for
+                for(Programa programa:programas){
+                    Log.d("REGISTRO -->",programa.toString());
+                }
+
+                ProgramaDao programaDao = new ProgramaDaoImpl();
+
+                programaDao.saveProgramas(programas);
+                int size = programas.size();
+                Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
+                //intent.putExtra("lista",materias);
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("ERROR: ","Fallo al obtener los programas");
+                Toast.makeText(ServiceImpl.this, "Fallo al Obtener los programas", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

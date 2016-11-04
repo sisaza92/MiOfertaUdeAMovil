@@ -2,14 +2,16 @@ package udea.edu.co.miofertaudea.modelo.dto;
 
 /**
  * Representación Objetual de un Programa.
- * @author CristianCamilo
+ * @author Santiago Ramirez
  */
 public class Programa {
     
     private int codigoPrograma;
     private String nombrePrograma;
+    // private String version;
     private String estado;
     private String ultimoSemestre;
+
 
     public Programa(int codigoPrograma, String nombrePrograma, String estado, String ultimoSemestre) {
         this.codigoPrograma = codigoPrograma;
@@ -17,6 +19,11 @@ public class Programa {
         this.estado = estado;
         this.ultimoSemestre = ultimoSemestre;
     }
+
+    public Programa() {
+
+    }
+
 
     
     
@@ -51,6 +58,10 @@ public class Programa {
     public void setUltimoSemestre(String ultimoSemestre) {
         this.ultimoSemestre = ultimoSemestre;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return  codigoPrograma + " " + nombrePrograma + "\n Estado: " +
+                estado + " -- Ultimo Semestre: " + ultimoSemestre ;
+    }
 }
