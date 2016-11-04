@@ -18,6 +18,11 @@ public class Programa {
         this.ultimoSemestre = ultimoSemestre;
     }
 
+    public Programa() {
+
+    }
+
+
     
     
     public int getCodigoPrograma() {
