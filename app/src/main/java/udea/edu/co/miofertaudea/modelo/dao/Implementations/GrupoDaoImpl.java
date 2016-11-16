@@ -11,7 +11,7 @@ import udea.edu.co.miofertaudea.modelo.dao.DbHelper;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 /**
- * @author Santiago Ramirez
+ * Created by Jeniffer Acosta on 1/11/2016.
  */
 
 public class GrupoDaoImpl implements GrupoDao{
@@ -20,9 +20,9 @@ public class GrupoDaoImpl implements GrupoDao{
     SQLiteDatabase db;
 
     @Override
-    public void saveGruposMateria(List<Grupo> grupos,String idMateria){
+    public void saveAllGrupos(List<Grupo> grupos,String idMateria){
 
-        Log.d("REGISTRO -->"," CLASE: GrupoDaoImpl METODO: saveGruposMateria");
+        Log.d("REGISTRO -->"," CLASE: GrupoDaoImpl METODO: saveAllGrupos");
         dbHelper = new DbHelper();//Instancia de DbHelper
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -42,15 +42,17 @@ public class GrupoDaoImpl implements GrupoDao{
             values.put(Contract.Column.GRUPO_HORARIO, grupo.getHorario());
             values.put(Contract.Column.GRUPO_NOMBRE_PROFESOR , grupo.getNombreProfesor());
 
+
             Log.d("REGISTRO -->", grupo.toString());
             db.insertWithOnConflict(Contract.TABLE_NAME_GRUPO, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
         }
         db.close();
+
     }
 
     @Override
-    public List<Grupo> getGruposMateria() {
+    public List<Grupo> getAllGruposPorMateria() {
         return null;
     }
 

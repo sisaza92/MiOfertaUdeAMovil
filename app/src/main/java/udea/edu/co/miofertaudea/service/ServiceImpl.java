@@ -22,6 +22,7 @@ import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
+import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 
 /**
@@ -57,7 +58,10 @@ public class ServiceImpl extends IntentService {
                 switch (accion){
                     case "listarMaterias":
                         String idPrograma = intent.getStringExtra("idPrograma");
-                        listarMaterias(idPrograma);
+                        String idEstudiante = intent.getStringExtra("idEstudiante");
+                        Log.d("IMPORTANTE -->","Al servicio listarMaterias le ha llegado el idPrograma "
+                                +idPrograma+" y el idEstudiante: "+idEstudiante  );
+                        listarMaterias(); // idPrograma en el metodo
                         break;
                     case "listarProgramas":
                         listarProgramas();
@@ -80,9 +84,9 @@ public class ServiceImpl extends IntentService {
         }
     }
 
-    private void listarMaterias(final String idPrograma) {
+    private void listarMaterias() {  //final String idPrograma en el metodo
             Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarMaterias");
-            ServiceFactory.getClienteRest().obtenerMateriasOfertadas(idPrograma, new Callback<List<MateriaOfertada>>() {
+            ServiceFactory.getClienteRest().obtenerMateriasOfertadas("101700", new Callback<List<MateriaOfertada>>() {
                 @Override
                 public void success(List<MateriaOfertada> materiasOfertadas, Response response) {
                     //TODO quitar for
@@ -95,7 +99,6 @@ public class ServiceImpl extends IntentService {
                     int size = materiasOfertadas.size();
                     Toast.makeText(ServiceImpl.this, "Materias Recibidas Exitosamente", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
-                    //intent.putExtra("lista",materias);
                     sendBroadcast(intent);
                 }
 
@@ -118,8 +121,9 @@ public class ServiceImpl extends IntentService {
                 }
 
                 ProgramaDao programaDao = new ProgramaDaoImpl();
-                int size = programas.size();
+
                 programaDao.saveProgramas(programas);
+                int size = programas.size();
                 Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
                 sendBroadcast(intent);
@@ -135,8 +139,8 @@ public class ServiceImpl extends IntentService {
 
 
         private void listarGruposMaterias(final String idMateria) {
-            Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
-            ServiceFactory.getClienteRest().obtenerGrupos(idMateria, new Callback<List<Grupo>>() {
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+        ServiceFactory.getClienteRest().obtenerGrupos(idMateria, new Callback<List<Grupo>>() {
             @Override
             public void success(List<Grupo> grupos, Response response) {
                 //TODO quitar for
@@ -144,8 +148,9 @@ public class ServiceImpl extends IntentService {
                     Log.d("REGISTRO -->",grupo.toString());
                 }
                 GrupoDao grupoDao = new GrupoDaoImpl();
+
+                grupoDao.saveAllGrupos(grupos,idMateria);
                 int size = grupos.size();
-                grupoDao.saveGruposMateria(grupos,idMateria);
                 Toast.makeText(ServiceImpl.this, "Grupos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
                 sendBroadcast(intent);
@@ -154,8 +159,8 @@ public class ServiceImpl extends IntentService {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("ERROR: ","Fallo al obtener los Grupos");
-                Toast.makeText(ServiceImpl.this, "Fallo al Obtener los grupos", Toast.LENGTH_LONG).show();
+
+
             }
         });
 

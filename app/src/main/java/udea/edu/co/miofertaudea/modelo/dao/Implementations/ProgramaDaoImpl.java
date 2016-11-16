@@ -24,6 +24,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
     DbHelper dbHelper;
     SQLiteDatabase db;
 
+
     @Override
     public void saveProgramas(List<Programa> programas) {
 
@@ -35,6 +36,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
 
         int size = programas.size();
         Programa programa = null;
+
 
         for (int i=0;i<size;i++){
             programa = programas.get(i);
@@ -49,6 +51,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
 
         }
         db.close();
+
     }
 
     @Override
@@ -83,6 +86,7 @@ public class ProgramaDaoImpl implements ProgramaDao {
             }
         }
         Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: otro hijo de ramirez");
+
         return programas;
     }
 }

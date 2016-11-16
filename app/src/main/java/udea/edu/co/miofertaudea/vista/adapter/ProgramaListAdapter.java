@@ -69,11 +69,11 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
             @Override
             public void onClick(View v) {
                 Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
-                Intent listarProgramas = new Intent(getContext(), Oferta_Ppal.class);
+                Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
                 String idPrograma = "" + listaProgramas.get(position).getCodigoPrograma();
-                listarProgramas.putExtra("idPrograma", idPrograma);
-                //listarProgramas.putExtra("idEstudiante", idEstudiante);
-                v.getContext().startActivity(listarProgramas);
+                listarMaterias.putExtra("idPrograma", idPrograma);
+                listarMaterias.putExtra("idEstudiante","101700");
+                v.getContext().startActivity(listarMaterias);
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
 
                 //v.setBackgroundResource(R.color.colorPrimaryDark);

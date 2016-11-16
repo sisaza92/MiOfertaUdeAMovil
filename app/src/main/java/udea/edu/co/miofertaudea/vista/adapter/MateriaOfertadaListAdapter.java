@@ -85,11 +85,12 @@ public class MateriaOfertadaListAdapter extends ArrayAdapter<MateriaOfertada> {
             @Override
             public void onClick(View v) {
 
-                Intent listarMateriasOfertadas = new Intent(getContext(),ServiceImpl.class);
+                Intent listarGruposMateria = new Intent(getContext(),ServiceImpl.class);
                 String codigoMateria = materiaOfertadas.get(position).getCodigoMateria();
-                listarMateriasOfertadas.putExtra("idMateria", codigoMateria);
+                listarGruposMateria.putExtra("idMateria", codigoMateria);
+                Log.d("REGISTRO -->","se ha seleccionado la materia con id: "+codigoMateria+" para mostrar sus grupos");
 
-                v.getContext().startService(listarMateriasOfertadas);
+                //v.getContext().startService(listarGruposMateria);
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
                 v.setBackgroundResource(R.color.colorPrimaryDark);
                 Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");

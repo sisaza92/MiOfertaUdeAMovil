@@ -88,7 +88,7 @@ public class Oferta_Ppal extends AppCompatActivity {
         Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas codigo del programa enviado es: " +idPrograma);
         Intent listarMaterias = new Intent(Oferta_Ppal.this, ServiceImpl.class);
         listarMaterias.putExtra("accion", "listarMaterias");
-        listarMaterias.putExtra("idPrograma", idPrograma);
+        listarMaterias.putExtra("idPrograma",idPrograma);
         startService(listarMaterias);
     }
 
@@ -96,6 +96,7 @@ public class Oferta_Ppal extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
             MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
             List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
