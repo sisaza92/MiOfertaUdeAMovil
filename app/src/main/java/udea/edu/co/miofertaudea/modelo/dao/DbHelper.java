@@ -50,6 +50,17 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.PROGRAMA_ESTADO,
                         Contract.Column.PROGRAMA_ULTIMO_SEMESTRE
                 );
+        String sql3=String
+                .format("create table %s(%s int,%s text, %s text, %s text)",
+                        Contract.TABLE_NAME_GRUPO,
+                        Contract.Column.GRUPO_ID_MATERIA,
+                        Contract.Column.GRUPO_ID,
+                        Contract.Column.GRUPO_CUPO_DISPONIBLE,
+                        Contract.Column.GRUPO_CUPO_MAXIMO,
+                        Contract.Column.GRUPO_AULA,
+                        Contract.Column.GRUPO_HORARIO,
+                        Contract.Column.GRUPO_NOMBRE_PROFESOR
+                );
 
         //Sentencia para crear tabla
         Log.d(TAG, "onCreate with SQL: " + sql1);
@@ -57,7 +68,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
         //Sentencia para crear tabla Programa
         Log.d(TAG, "onCreate with SQL: " + sql2);
-        db.execSQL(sql2);//Ejecución de la sentencia sql
+        db.execSQL(sql2);//Ejecución de la sentencia sql2
+
+        //Sentencia para crear tabla Programa
+        Log.d(TAG, "onCreate with SQL: " + sql3);
+        db.execSQL(sql3);//Ejecución de la sentencia sql3
 
 
     }
@@ -74,10 +89,9 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d("REGISTRO -->"," CLASE: DbHelper METODO: onUpgrade");
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_MATERIA_OFERTADA);//Borrar datos
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_PROGRAMA);//Borrar datos tabla programa
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla programa
         onCreate(db);//Crear Tabla de nuevo
 
     }
-
-
 
 }

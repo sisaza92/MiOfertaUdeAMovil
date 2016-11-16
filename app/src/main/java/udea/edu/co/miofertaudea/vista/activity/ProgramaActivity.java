@@ -37,14 +37,7 @@ public class ProgramaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: onCreate");
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_programa_layout);
-
-        // spinerProgramas se utiliza para setear el spiner del layout
-        //spinerProgramas = (Spinner) findViewById(R.id.spinner_programa);
-        //spinerProgramas.setOnItemClickListener((AdapterView.OnItemClickListener) this);
-
         listaProgramas = (ListView) findViewById(R.id.listViewPrograma);
         filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
         getProgramas();
@@ -61,16 +54,12 @@ public class ProgramaActivity extends AppCompatActivity {
     /**
      * Metodo que Crea un IntentService para llamar al servicio que lista los programas.
      */
-
     private void getProgramas() {
 
         Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: getProgramas");
         Intent listarProgramas = new Intent(ProgramaActivity.this, ServiceImpl.class);
         listarProgramas.putExtra("accion", "listarProgramas");
         startService(listarProgramas);
-        //ProgramaDao programaDao = new ProgramaDaoImpl();
-        //List<Programa> programas = programaDao.getProgramas();
-
     }
 
 

@@ -83,11 +83,12 @@ public class Oferta_Ppal extends AppCompatActivity {
      * Metodo que Crea un IntentService para llamar al servicio que lista las materias.
      */
     private void getAllMateriasOfertadas(){
-        //String idPrograma =  getIntent().getStringExtra("idPrograma");
+        String idPrograma =  getIntent().getStringExtra("idPrograma");
         Log.d("REGISTRO -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas");
-        //Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas codigo del programa enviado es: " +idPrograma);
+        Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas codigo del programa enviado es: " +idPrograma);
         Intent listarMaterias = new Intent(Oferta_Ppal.this, ServiceImpl.class);
         listarMaterias.putExtra("accion", "listarMaterias");
+        listarMaterias.putExtra("idPrograma", idPrograma);
         startService(listarMaterias);
     }
 
@@ -95,7 +96,6 @@ public class Oferta_Ppal extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
             MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
             List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();

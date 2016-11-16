@@ -11,7 +11,7 @@ import udea.edu.co.miofertaudea.modelo.dao.DbHelper;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 /**
- * Created by Jeniffer Acosta on 1/11/2016.
+ * @author Santiago Ramirez
  */
 
 public class GrupoDaoImpl implements GrupoDao{
@@ -20,20 +20,21 @@ public class GrupoDaoImpl implements GrupoDao{
     SQLiteDatabase db;
 
     @Override
-    public void saveAllGrupos(List<Grupo> gruposPorMateria){
+    public void saveGruposMateria(List<Grupo> grupos,String idMateria){
 
-        Log.d("REGISTRO -->"," CLASE: GrupoDaoImpl METODO: saveAllGrupos");
+        Log.d("REGISTRO -->"," CLASE: GrupoDaoImpl METODO: saveGruposMateria");
         dbHelper = new DbHelper();//Instancia de DbHelper
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         db.delete(Contract.TABLE_NAME_GRUPO,null,null);
 
-        int size = gruposPorMateria.size();
+        int size = grupos.size();
         Grupo grupo = null;
 
         for (int i=0;i<size;i++){
-            grupo = gruposPorMateria.get(i);
+            grupo = grupos.get(i);
 
+            values.put(Contract.Column.GRUPO_ID_MATERIA,idMateria);
             values.put(Contract.Column.GRUPO_ID, grupo.getGrupo());
             values.put(Contract.Column.GRUPO_CUPO_MAXIMO , grupo.getCupoMaximo());
             values.put(Contract.Column.GRUPO_CUPO_DISPONIBLE, grupo.getCupoDisponible());
@@ -41,17 +42,15 @@ public class GrupoDaoImpl implements GrupoDao{
             values.put(Contract.Column.GRUPO_HORARIO, grupo.getHorario());
             values.put(Contract.Column.GRUPO_NOMBRE_PROFESOR , grupo.getNombreProfesor());
 
-
             Log.d("REGISTRO -->", grupo.toString());
             db.insertWithOnConflict(Contract.TABLE_NAME_GRUPO, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
         }
         db.close();
-
     }
 
     @Override
-    public List<Grupo> getAllGruposPorMateria() {
+    public List<Grupo> getGruposMateria() {
         return null;
     }
 

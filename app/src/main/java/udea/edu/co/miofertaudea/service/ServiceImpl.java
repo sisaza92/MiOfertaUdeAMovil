@@ -14,10 +14,13 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.GrupoDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
+import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 
@@ -53,14 +56,16 @@ public class ServiceImpl extends IntentService {
             if ((networkInfo != null) && (networkInfo.isConnected())) {
                 switch (accion){
                     case "listarMaterias":
-                        listarMaterias();
+                        String idPrograma = intent.getStringExtra("idPrograma");
+                        listarMaterias(idPrograma);
                         break;
                     case "listarProgramas":
                         listarProgramas();
                         break;
 
-                    case "":
-
+                    case "listarGrupos":
+                        String idMateria = intent.getStringExtra("idMateria");
+                        listarGruposMaterias(idMateria);
                         break;
                 }
             } else {
@@ -75,9 +80,9 @@ public class ServiceImpl extends IntentService {
         }
     }
 
-    private void listarMaterias() {
+    private void listarMaterias(final String idPrograma) {
             Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarMaterias");
-            ServiceFactory.getClienteRest().obtenerMateriasOfertadas("101700", new Callback<List<MateriaOfertada>>() {
+            ServiceFactory.getClienteRest().obtenerMateriasOfertadas(idPrograma, new Callback<List<MateriaOfertada>>() {
                 @Override
                 public void success(List<MateriaOfertada> materiasOfertadas, Response response) {
                     //TODO quitar for
@@ -113,12 +118,10 @@ public class ServiceImpl extends IntentService {
                 }
 
                 ProgramaDao programaDao = new ProgramaDaoImpl();
-
-                programaDao.saveProgramas(programas);
                 int size = programas.size();
+                programaDao.saveProgramas(programas);
                 Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
-                //intent.putExtra("lista",materias);
                 sendBroadcast(intent);
             }
 
@@ -129,5 +132,35 @@ public class ServiceImpl extends IntentService {
             }
         });
     }
+
+
+        private void listarGruposMaterias(final String idMateria) {
+            Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+            ServiceFactory.getClienteRest().obtenerGrupos(idMateria, new Callback<List<Grupo>>() {
+            @Override
+            public void success(List<Grupo> grupos, Response response) {
+                //TODO quitar for
+                for(Grupo grupo:grupos){
+                    Log.d("REGISTRO -->",grupo.toString());
+                }
+                GrupoDao grupoDao = new GrupoDaoImpl();
+                int size = grupos.size();
+                grupoDao.saveGruposMateria(grupos,idMateria);
+                Toast.makeText(ServiceImpl.this, "Grupos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
+                sendBroadcast(intent);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("ERROR: ","Fallo al obtener los Grupos");
+                Toast.makeText(ServiceImpl.this, "Fallo al Obtener los grupos", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        }
+
 
 }
