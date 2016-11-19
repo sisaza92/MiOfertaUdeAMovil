@@ -82,7 +82,7 @@ public class MateriaOfertadaDaoImpl implements MateriaOfertadaDao {
                 materiasOfertadas.add(materiaOfertada);
             }
         }
-
+        db.close();
         return materiasOfertadas;
     }
 }

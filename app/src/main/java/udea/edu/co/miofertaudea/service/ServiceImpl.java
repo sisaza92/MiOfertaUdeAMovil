@@ -58,9 +58,10 @@ public class ServiceImpl extends IntentService {
                 switch (accion){
                     case "listarMaterias":
                         String idPrograma = intent.getStringExtra("idPrograma");
-                        String idEstudiante = intent.getStringExtra("idEstudiante");
+                        //alerta el idEstudiante estallegando null
+                        //String idEstudiante = intent.getStringExtra("idEstudiante");
                         Log.d("IMPORTANTE -->","Al servicio listarMaterias le ha llegado el idPrograma "
-                                +idPrograma+" y el idEstudiante: "+idEstudiante  );
+                                +idPrograma);
                         listarMaterias(); // idPrograma en el metodo
                         break;
                     case "listarProgramas":
@@ -68,8 +69,10 @@ public class ServiceImpl extends IntentService {
                         break;
 
                     case "listarGrupos":
-                        String idMateria = intent.getStringExtra("idMateria");
-                        listarGruposMaterias(idMateria);
+                        String codigoMateria = intent.getStringExtra("codigoMateria");
+                        Log.d("IMPORTANTE -->","Al servicio listarGrupos le ha llegado el idMateria "
+                                +codigoMateria);
+                        listarGruposMaterias(codigoMateria);
                         break;
                 }
             } else {
@@ -98,7 +101,7 @@ public class ServiceImpl extends IntentService {
                     materiasOfertadasDao.saveAllMaterias(materiasOfertadas);
                     int size = materiasOfertadas.size();
                     Toast.makeText(ServiceImpl.this, "Materias Recibidas Exitosamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
+                    Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
                     sendBroadcast(intent);
                 }
 
@@ -125,7 +128,7 @@ public class ServiceImpl extends IntentService {
                 programaDao.saveProgramas(programas);
                 int size = programas.size();
                 Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_PROGRAMAS");
                 sendBroadcast(intent);
             }
 
@@ -138,9 +141,9 @@ public class ServiceImpl extends IntentService {
     }
 
 
-        private void listarGruposMaterias(final String idMateria) {
+        private void listarGruposMaterias(final String codigoMateria) {
         Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
-        ServiceFactory.getClienteRest().obtenerGrupos(idMateria, new Callback<List<Grupo>>() {
+        ServiceFactory.getClienteRest().obtenerGrupos(codigoMateria, new Callback<List<Grupo>>() {
             @Override
             public void success(List<Grupo> grupos, Response response) {
                 //TODO quitar for
@@ -149,10 +152,11 @@ public class ServiceImpl extends IntentService {
                 }
                 GrupoDao grupoDao = new GrupoDaoImpl();
 
-                grupoDao.saveAllGrupos(grupos,idMateria);
+                grupoDao.saveAllGrupos(grupos,codigoMateria);
                 int size = grupos.size();
                 Toast.makeText(ServiceImpl.this, "Grupos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA");
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_GRUPOS");
+                intent.putExtra("codigoMateria",codigoMateria);
                 sendBroadcast(intent);
 
             }

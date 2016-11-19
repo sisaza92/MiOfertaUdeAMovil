@@ -51,7 +51,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.PROGRAMA_ULTIMO_SEMESTRE
                 );
         String sql3=String
-                .format("create table %s(%s text,%s int,%s text, %s text, %s text)",
+                .format("create table %s(%s text,%s text,%s int, %s int, %s text,%s text,%s text)",
                         Contract.TABLE_NAME_GRUPO,
                         Contract.Column.GRUPO_ID_MATERIA,
                         Contract.Column.GRUPO_ID,
@@ -71,7 +71,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(sql2);//Ejecución de la sentencia sq2
 
         Log.d(TAG, "onCreate with SQL: " + sql3);
-        db.execSQL(sql2);//Ejecución de la sentencia sq3
+        db.execSQL(sql3);//Ejecución de la sentencia sq3
 
 
     }

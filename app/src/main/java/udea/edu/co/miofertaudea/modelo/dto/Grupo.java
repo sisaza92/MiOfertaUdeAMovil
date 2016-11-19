@@ -1,5 +1,7 @@
 package udea.edu.co.miofertaudea.modelo.dto;
 
+import android.view.View;
+
 /**
  * Representa uno de varios posibles grupos asociados a una misma materia, estos
  * grupos pueden tener distintos horarios, aulas y profesores y los valores de 
@@ -62,6 +64,13 @@ public class Grupo {
     public void setNombreProfesor(String nombreProfesor) {
         this.nombreProfesor = nombreProfesor;
     }
-    
-    
+
+    public String toStringGrupoHorario(){
+        return  "Grupo: "+grupo+"  Horario: "+horario;
+    }
+
+    public String toStringCupos(){
+        return  "Cupos disponibles: " + cupoDisponible+"  Cupo maximo: "+cupoMaximo;
+    }
+
 }

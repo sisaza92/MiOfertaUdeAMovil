@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import udea.edu.co.miofertaudea.R;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
+import udea.edu.co.miofertaudea.vista.activity.GrupoActivity;
 
 /**
  * Created by CristianCamilo on 10/10/2016.
@@ -75,31 +76,34 @@ public class MateriaOfertadaListAdapter extends ArrayAdapter<MateriaOfertada> {
         viewHolder.horario.setText(materiaOfertada.getHorario());
 
         view.setOnClickListener(getListener(position));
-
         return view;
     }
 
     private View.OnClickListener getListener(final int position){
         Log.d("REGISTRO -->","CLASE: MateriaOfertadaListAdapter, METODO: getListener");
         View.OnClickListener listener = new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
 
-                Intent listarGruposMateria = new Intent(getContext(),ServiceImpl.class);
+                Intent listarGruposMateria = new Intent(getContext(), GrupoActivity.class);
                 String codigoMateria = materiaOfertadas.get(position).getCodigoMateria();
-                listarGruposMateria.putExtra("idMateria", codigoMateria);
-                Log.d("REGISTRO -->","se ha seleccionado la materia con id: "+codigoMateria+" para mostrar sus grupos");
+                String nombreMateria = materiaOfertadas.get(position).getNombreMateria();
 
-                //v.getContext().startService(listarGruposMateria);
+                listarGruposMateria.putExtra("codigoMateria", codigoMateria);
+                listarGruposMateria.putExtra("nombreMateria",nombreMateria);
+
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
-                v.setBackgroundResource(R.color.colorPrimaryDark);
                 Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
+                Log.d("REGISTRO -->","se ha seleccionado la materia con nombre :"+nombreMateria+  " y codigoMateria: "
+                        +codigoMateria+" para mostrar sus grupos");
+
+
+                v.getContext().startActivity(listarGruposMateria);
 
             }
         };
-
         return listener;
-
     }
 
 }

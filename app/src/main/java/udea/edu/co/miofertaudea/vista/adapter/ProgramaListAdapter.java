@@ -57,9 +57,9 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
         // importante!!! establecemos el mensaje
         viewHolder.infoPrograma.setText(programa.toString());
 
-    //escuchador de evento
-    view.setOnClickListener(getListener(position));
-    return view;
+        //escuchador de evento
+        view.setOnClickListener(getListener(position));
+        return view;
 }
 
     private View.OnClickListener getListener(final int position){
@@ -68,14 +68,14 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
 
             @Override
             public void onClick(View v) {
-                Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
+
                 Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
                 String idPrograma = "" + listaProgramas.get(position).getCodigoPrograma();
                 listarMaterias.putExtra("idPrograma", idPrograma);
                 listarMaterias.putExtra("idEstudiante","101700");
                 v.getContext().startActivity(listarMaterias);
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
-
+                Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
                 //v.setBackgroundResource(R.color.colorPrimaryDark);
             }
         };

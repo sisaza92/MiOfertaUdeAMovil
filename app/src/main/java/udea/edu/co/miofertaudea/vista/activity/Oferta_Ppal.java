@@ -26,7 +26,6 @@ public class Oferta_Ppal extends AppCompatActivity {
     private IntentFilter filtro;
     private BroadcastReceiver receptor;
 
-    Fragment materiasFragment;
     ListView listaMaterias;
 
     @Override
@@ -61,7 +60,7 @@ public class Oferta_Ppal extends AppCompatActivity {
 
         Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate");
         listaMaterias = (ListView)findViewById(R.id.lista_materias);
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
+        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
         getAllMateriasOfertadas();
 
     }
@@ -84,8 +83,10 @@ public class Oferta_Ppal extends AppCompatActivity {
      */
     private void getAllMateriasOfertadas(){
         String idPrograma =  getIntent().getStringExtra("idPrograma");
+        String idEstudiante = getIntent().getStringExtra("idEstudiante");
         Log.d("REGISTRO -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas");
-        Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas codigo del programa enviado es: " +idPrograma);
+        Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas" +
+                " codigo del programa enviado es: " +idPrograma+ "  y el idEstudiante enviado es: "+idEstudiante);
         Intent listarMaterias = new Intent(Oferta_Ppal.this, ServiceImpl.class);
         listarMaterias.putExtra("accion", "listarMaterias");
         listarMaterias.putExtra("idPrograma",idPrograma);

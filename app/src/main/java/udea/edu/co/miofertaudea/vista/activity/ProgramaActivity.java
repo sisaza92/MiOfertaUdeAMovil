@@ -1,7 +1,6 @@
 package udea.edu.co.miofertaudea.vista.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +37,9 @@ public class ProgramaActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programa_layout);
+
         listaProgramas = (ListView) findViewById(R.id.listViewPrograma);
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
+        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_PROGRAMAS");
         getProgramas();
     }
 

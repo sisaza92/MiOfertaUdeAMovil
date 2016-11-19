@@ -81,12 +81,11 @@ public class ProgramaDaoImpl implements ProgramaDao {
                 programa.setEstado(cursor.getString(indxEstado));
                 programa.setUltimoSemestre(cursor.getString(indxUltimoSemestre));
 
-                Log.d("CONSULTANDO", programa.toString());
+                Log.d("SE HA CONSULTADO: ", programa.toString());
                 programas.add(programa);
             }
         }
-        Log.d("REGISTRO -->"," CLASE: ProgramaDaoImpl METODO: otro hijo de ramirez");
-
+        db.close();
         return programas;
     }
 }

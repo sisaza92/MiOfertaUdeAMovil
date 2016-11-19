@@ -61,7 +61,7 @@ public class Programa {
 
     @Override
     public String toString() {
-        return  codigoPrograma + " " + nombrePrograma + "\n Estado: " +
-                estado + " -- Ultimo Semestre: " + ultimoSemestre ;
+        return  "  "+codigoPrograma + "  " + nombrePrograma + "\n  Estado: " +
+                estado + "\n  Ùltimo Semestre: " + ultimoSemestre ;
     }
 }

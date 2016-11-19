@@ -22,8 +22,9 @@ public interface GrupoDao {
     /**
      * Método usado para retornar una lista de todos los grupos por materia que han sido almacenadas
      * en la base de datos del dispositivo móvil.
+     * @param idMateria
      * @return Retorna una lista con todos los grupos.
      */
-    public List<Grupo> getAllGruposPorMateria ();
+    public List<Grupo> getAllGruposPorMateria (String idMateria);
 
 }

@@ -29,6 +29,8 @@
 
         <activity android:name=".vista.activity.Oferta_Ppal"/>
 
+        <activity android:name=".vista.activity.GrupoActivity"/>
+
         <service
             android:name=".service.ServiceImpl"
             android:exported="false">

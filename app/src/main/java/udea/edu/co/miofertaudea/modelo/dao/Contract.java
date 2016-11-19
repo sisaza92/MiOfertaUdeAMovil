@@ -8,7 +8,7 @@ package udea.edu.co.miofertaudea.modelo.dao;
 public class Contract {
 
     public static final  String DB_NAME = "MiOfertaUdeA.db";
-    public static final int DB_VERSION = 5;
+    public static final int DB_VERSION = 7;
     public static final String TABLE_NAME_GRUPO = "grupo";
     public static final String TABLE_NAME_MATERIA_OFERTADA = "materiaOfertada";
     public static final String TABLE_NAME_PROGRAMA = "programa";
@@ -25,7 +25,7 @@ public class Contract {
         /**
          * Constantes que especifican los nombres de las columnas de la tabla grupo
          */
-         public static final String GRUPO_ID_MATERIA = "idMateria";
+        public static final String GRUPO_ID_MATERIA = "idMateria";
         public static final String GRUPO_ID = "idGrupo";
         public static final String GRUPO_CUPO_MAXIMO = "cupoMaximo";
         public static final String GRUPO_CUPO_DISPONIBLE = "cupoDisponible";
