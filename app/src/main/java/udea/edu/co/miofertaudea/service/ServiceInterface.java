@@ -5,6 +5,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.Impedimento;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
@@ -26,14 +27,15 @@ public interface ServiceInterface  {
      * deberá retornar la estructura: programa, nombreprograma, estado, semestre
      */
     @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerProgramaYUltimoSemestre/{cedulaEstudiante}")
-    public void obtenerProgramaYUltimoSemestre(@Path("cedulaEstudiante") String cedula, Callback<List<Programa>> callback);
+    public void obtenerProgramaYUltimoSemestre(@Path("cedulaEstudiante") String cedulaEstudiante, Callback<List<Programa>> callback);
 
     /**
      * Retorna las materias que está cursando en el programa/semestre, no está creado,
      * deberá retornar la estructura: codigomateria, nombremateria, creditos, grupo, horario
      */
-    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerMateriasOfertadas/{cedulaEstudiante}")
-    public void obtenerMateriasOfertadas(@Path("cedulaEstudiante") String cedulaEstudiante, Callback<List<MateriaOfertada>> callback);
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerMateriasOfertadas/{cedulaEstudiante}/{idPrograma}")
+    public void obtenerMateriasOfertadas(@Path("cedulaEstudiante") String cedulaEstudiante,
+                                         @Path("idPrograma") String idPrograma, Callback<List<MateriaOfertada>> callback);
 
     /**
      * Retorna los grupos disponibles de la materia el programa/semestre, no está creado,
@@ -55,5 +57,15 @@ public interface ServiceInterface  {
      */
     @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerImpedimentos/{cedulaEstudiante}")
     public void obtenerImpedimentos(Callback<List<Impedimento>> impedimentos);
+
+    /**
+     * Retorna los impedimientos el programa, no está creado, deberá retornar la
+     * estructura: semestre, impedimiento
+     */
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerImpedimentos/{cedulaEstudiante}")
+    public void obtenerEstudiante(@Path("cedulaEstudiante") String cedula,Callback<Estudiante> estudiante);
+
+
+
 
 }

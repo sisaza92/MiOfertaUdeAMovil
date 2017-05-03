@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00AA11</color>
-    <color name="colorPrimaryDark">#66AA00</color>
+    <color name="colorPrimary">#056e0f</color>
+    <color name="colorPrimaryDark">#bddc8f</color>
     <color name="colorAccent">#444444</color>
-    <color name="Verde_UdeA">#1fa40e</color>
-    <color name="Verde_UdeA2">#30b71f</color>
+    <color name="Verde_UdeA">#17780b</color>
+    <color name="Verde_UdeA2">#279319</color>
+    <color name="black">#000000</color>
 </resources>

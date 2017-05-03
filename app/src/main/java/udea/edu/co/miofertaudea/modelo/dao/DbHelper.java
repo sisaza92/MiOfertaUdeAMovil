@@ -61,6 +61,15 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.GRUPO_HORARIO,
                         Contract.Column.GRUPO_NOMBRE_PROFESOR
                 );
+        String sql4=String
+                .format("create table %s(%s text,%s text,%s text,%s text,%s text)",
+                        Contract.TABLE_NAME_ESTUDIANTE,
+                        Contract.Column.ESTUDIANTE_CEDULA_ESTUDIANTE,
+                        Contract.Column.ESTUDIANTE_NOMBRES,
+                        Contract.Column.ESTUDIANTE_APELLIDOS,
+                        Contract.Column.ESTUDIANTE_FECHA_NACIMIENTO ,
+                        Contract.Column.ESTUDIANTE_EMAL
+                );
 
         //Sentencia para crear tabla
         Log.d(TAG, "onCreate with SQL: " + sql1);
@@ -70,9 +79,11 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate with SQL: " + sql2);
         db.execSQL(sql2);//Ejecución de la sentencia sq2
 
+        //Sentencia para crear tabla grupo
         Log.d(TAG, "onCreate with SQL: " + sql3);
         db.execSQL(sql3);//Ejecución de la sentencia sq3
 
+        //Sentencia para crear tabla Estudiante
 
     }
 

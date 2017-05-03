@@ -14,12 +14,15 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.EstudianteDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.GrupoDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.EstudianteDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
+import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
@@ -74,6 +77,9 @@ public class ServiceImpl extends IntentService {
                                 +codigoMateria);
                         listarGruposMaterias(codigoMateria);
                         break;
+                    case "obtenerEstudiante":
+                        String cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                    break;
                 }
             } else {
                 // si no hay conexion muestra un mensaje avisando que no se realizó la sincronización.
@@ -89,7 +95,7 @@ public class ServiceImpl extends IntentService {
 
     private void listarMaterias() {  //final String idPrograma en el metodo
             Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarMaterias");
-            ServiceFactory.getClienteRest().obtenerMateriasOfertadas("101700", new Callback<List<MateriaOfertada>>() {
+            ServiceFactory.getClienteRest().obtenerMateriasOfertadas("101700","504", new Callback<List<MateriaOfertada>>() {
                 @Override
                 public void success(List<MateriaOfertada> materiasOfertadas, Response response) {
                     //TODO quitar for
@@ -170,6 +176,40 @@ public class ServiceImpl extends IntentService {
 
 
         }
+
+    private void obtenerEstudiante(String cedulaEstudiante) {
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+        ServiceFactory.getClienteRest().obtenerEstudiante(cedulaEstudiante, new Callback<Estudiante>(){
+
+            @Override
+            public void success(Estudiante estudiante, Response response) {
+                //TODO quitar for
+                estudiante.toString();
+
+                EstudianteDao estudianteDao = new EstudianteDaoImpl();
+
+                estudianteDao.saveEstudiante(estudiante);
+
+                //Toast.makeText(ServiceImpl.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVO_ESTUDIANTE");
+                intent.putExtra("cedulaEstudiante",estudiante.getCedula());
+                sendBroadcast(intent);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+
+            }
+
+
+
+        });
+
+
+
+    }
 
 
 }
