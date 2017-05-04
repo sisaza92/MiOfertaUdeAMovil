@@ -1,5 +1,7 @@
 package udea.edu.co.miofertaudea.modelo.dao;
 
+import java.util.Date;
+
 /**
  * En esta clase se Colocan todas las constantes referentes a la base de datos como
  * el nombre de la misma, los nombres de sus tablas y columnas.
@@ -12,6 +14,7 @@ public class Contract {
     public static final String TABLE_NAME_GRUPO = "grupo";
     public static final String TABLE_NAME_MATERIA_OFERTADA = "materiaOfertada";
     public static final String TABLE_NAME_PROGRAMA = "programa";
+    public static final String TABLE_NAME_TANDA = "tanda";
     public static final String TABLE_NAME_ESTUDIANTE = "estudiante";
 
     /**
@@ -49,6 +52,17 @@ public class Contract {
         public static final String PROGRAMA_NOMBRE_PROGRAMA = "nombrePrograma";
         public static final String PROGRAMA_ESTADO = "estado";
         public static final String PROGRAMA_ULTIMO_SEMESTRE = "ultimoSemestre";
+
+        /**
+         * Constantes que especifican los nombres de las columnas de la tabla tanda
+         */
+
+        public static final String TANDA_NOMBRE = "nombre";
+        public static final String TANDA_NUMERO_TANDA = "nroTanda";
+        public static final String TANDA_FECHA = "fecha";
+        public static final String TANDA_HORA_INICIO = "horaInicio";
+        public static final String TANDA_HORA_FIN = "horaFin";
+
 
         /**
          * Constantes que especifican los nombres de las columnas de la tabla estudiante

@@ -16,7 +16,7 @@ public class ServiceFactory {
     private static ServiceInterface CLIENTE_REST;
     private static final String SERVICE_HOST = PropertyReader.getMyProperties("Config.properties").getProperty("SERVICE_HOST");
     private static final String SERVICE_PORT = PropertyReader.getMyProperties("Config.properties").getProperty("SERVICE_PORT");
-    private static final String URL_ROOT = "http://"+SERVICE_HOST+":"+SERVICE_PORT;
+    private static final String URL_ROOT = "https://"+SERVICE_HOST+":"+SERVICE_PORT;
 
     static {
         setupRestClient();

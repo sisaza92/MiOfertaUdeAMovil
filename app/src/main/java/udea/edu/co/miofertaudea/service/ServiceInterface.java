@@ -19,7 +19,7 @@ import udea.edu.co.miofertaudea.modelo.dto.Tanda;
  */
 public interface ServiceInterface  {
 
-    final String URL_CONTEXT_PATH = "/MiOfertaUdeA";
+    final String URL_CONTEXT_PATH = "/rest";
     final String URL_SERVICE = "/MiOferta";
 
     /**

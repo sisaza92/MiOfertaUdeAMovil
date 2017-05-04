@@ -61,7 +61,18 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.GRUPO_HORARIO,
                         Contract.Column.GRUPO_NOMBRE_PROFESOR
                 );
+        //ojo
         String sql4=String
+                .format("create table %s(%s text,%s int,%s int, %s int, %s int)",
+                        Contract.TABLE_NAME_TANDA,
+                        Contract.Column.TANDA_NOMBRE,
+                        Contract.Column.TANDA_NUMERO_TANDA,
+                        Contract.Column.TANDA_FECHA,
+                        Contract.Column.TANDA_HORA_INICIO,
+                        Contract.Column.TANDA_HORA_FIN
+                );
+
+        String sql5=String
                 .format("create table %s(%s text,%s text,%s text,%s text,%s text)",
                         Contract.TABLE_NAME_ESTUDIANTE,
                         Contract.Column.ESTUDIANTE_CEDULA_ESTUDIANTE,
@@ -83,6 +94,10 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate with SQL: " + sql3);
         db.execSQL(sql3);//Ejecución de la sentencia sq3
 
+        //Sentencia para crear tabla grupo
+        Log.d(TAG, "onCreate with SQL: " + sql4);
+        db.execSQL(sql4);//Ejecución de la sentencia sq4
+
         //Sentencia para crear tabla Estudiante
 
     }
@@ -100,6 +115,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_MATERIA_OFERTADA);//Borrar datos
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_PROGRAMA);//Borrar datos tabla programa
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
         onCreate(db);//Crear Tabla de nuevo
 
     }
