@@ -72,6 +72,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.TANDA_HORA_FIN
                 );
 
+        // cambiar fechaNaciomiento a tipo Date
         String sql5=String
                 .format("create table %s(%s text,%s text,%s text,%s text,%s text)",
                         Contract.TABLE_NAME_ESTUDIANTE,
@@ -99,6 +100,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(sql4);//Ejecución de la sentencia sq4
 
         //Sentencia para crear tabla Estudiante
+        db.execSQL(sql5);//Ejecución de la sentencia sq5
 
     }
 
@@ -116,6 +118,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_PROGRAMA);//Borrar datos tabla programa
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla estudiante
         onCreate(db);//Crear Tabla de nuevo
 
     }

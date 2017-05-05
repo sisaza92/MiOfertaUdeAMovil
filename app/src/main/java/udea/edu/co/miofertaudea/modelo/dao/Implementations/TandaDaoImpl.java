@@ -93,6 +93,6 @@ public class TandaDaoImpl implements TandaDao {
 
         db.close();
 
-        return null;
+        return tanda;
     }
 }

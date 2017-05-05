@@ -59,10 +59,10 @@ public interface ServiceInterface  {
     public void obtenerImpedimentos(Callback<List<Impedimento>> impedimentos);
 
     /**
-     * Retorna los impedimientos el programa, no está creado, deberá retornar la
-     * estructura: semestre, impedimiento
+     * Retorna  el un objeto Estudiante en formato json, no está creado, deberá retornar la
+     * estructura:
      */
-    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerImpedimentos/{cedulaEstudiante}")
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerInfoEstudiante/{cedulaEstudiante}")
     public void obtenerEstudiante(@Path("cedulaEstudiante") String cedula,Callback<Estudiante> estudiante);
 
 

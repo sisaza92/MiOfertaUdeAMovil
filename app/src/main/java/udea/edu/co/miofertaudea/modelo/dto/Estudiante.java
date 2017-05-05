@@ -5,6 +5,8 @@ package udea.edu.co.miofertaudea.modelo.dto;
  */
 public class Estudiante {
 
+    //cambiar fechaDeNacimiento a tipo Date
+
     String cedula;
     String nombres;
     String apellidos;
@@ -18,6 +20,8 @@ public class Estudiante {
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.email = email;
     }
+
+    public Estudiante(){}
 
     public String getCedula() {
         return cedula;
