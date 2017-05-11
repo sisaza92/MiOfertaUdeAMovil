@@ -17,6 +17,7 @@ import java.util.List;
 import udea.edu.co.miofertaudea.R;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
+import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
 import udea.edu.co.miofertaudea.vista.adapter.ProgramaListAdapter;
@@ -37,6 +38,10 @@ public class ProgramaActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programa_layout);
+
+        Estudiante estudiante = (Estudiante) getIntent().getSerializableExtra("ESTUDIANTE");
+        Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: onCreate resive del " +
+                "login el objeto estudiante:" + estudiante.toString());
 
         listaProgramas = (ListView) findViewById(R.id.listViewPrograma);
         filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_PROGRAMAS");

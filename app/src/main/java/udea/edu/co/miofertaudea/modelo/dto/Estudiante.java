@@ -1,9 +1,11 @@
 package udea.edu.co.miofertaudea.modelo.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by Santiago on 29/11/2016.
  */
-public class Estudiante {
+public class Estudiante implements Serializable{
 
     //cambiar fechaDeNacimiento a tipo Date
 
@@ -63,6 +65,14 @@ public class Estudiante {
         this.email = email;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                "cedula='" + cedula + '\'' +
+                ", nombres='" + nombres + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", fechaDeNacimiento='" + fechaDeNacimiento + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

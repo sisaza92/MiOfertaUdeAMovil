@@ -10,7 +10,7 @@ import java.util.Date;
 public class Contract {
 
     public static final  String DB_NAME = "MiOfertaUdeA.db";
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 8;
     public static final String TABLE_NAME_GRUPO = "grupo";
     public static final String TABLE_NAME_MATERIA_OFERTADA = "materiaOfertada";
     public static final String TABLE_NAME_PROGRAMA = "programa";

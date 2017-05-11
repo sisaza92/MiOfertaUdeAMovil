@@ -63,7 +63,7 @@ public class ServiceImpl extends IntentService {
                         String idPrograma = intent.getStringExtra("idPrograma");
                         //alerta el idEstudiante estallegando null
                         //String idEstudiante = intent.getStringExtra("idEstudiante");
-                        Log.d("IMPORTANTE -->","Al servicio listarMaterias le ha llegado el idPrograma "
+                        Log.d("IMPORTANTE -->","Al servicio listarMaterias le ha llegado el idPrograma: "
                                 +idPrograma);
                         listarMaterias(); // idPrograma en el metodo
                         break;
@@ -73,12 +73,16 @@ public class ServiceImpl extends IntentService {
 
                     case "listarGrupos":
                         String codigoMateria = intent.getStringExtra("codigoMateria");
-                        Log.d("IMPORTANTE -->","Al servicio listarGrupos le ha llegado el idMateria "
+                        Log.d("IMPORTANTE -->","Al servicio listarGrupos le ha llegado el idMateria: "
                                 +codigoMateria);
                         listarGruposMaterias(codigoMateria);
                         break;
                     case "obtenerEstudiante":
                         String cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                        Log.d("IMPORTANTE -->","Al servicio obtenerEstudiante le ha llegado el cedulaEstudiante: "
+                                +cedulaEstudiante);
+                        obtenerEstudiante(cedulaEstudiante);
+
                     break;
                 }
             } else {
@@ -178,19 +182,19 @@ public class ServiceImpl extends IntentService {
         }
 
     private void obtenerEstudiante(String cedulaEstudiante) {
-        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerEstudiante");
         ServiceFactory.getClienteRest().obtenerEstudiante(cedulaEstudiante, new Callback<Estudiante>(){
-
             @Override
             public void success(Estudiante estudiante, Response response) {
                 //TODO quitar for
-                estudiante.toString();
+                Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerEstudiante obtiene" +
+                        " el estudiante: " +estudiante.toString());
 
+                //puede que no este guardando bien
                 EstudianteDao estudianteDao = new EstudianteDaoImpl();
 
                 estudianteDao.saveEstudiante(estudiante);
-
-                //Toast.makeText(ServiceImpl.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(ServiceImpl.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVO_ESTUDIANTE");
                 intent.putExtra("cedulaEstudiante",estudiante.getCedula());
                 sendBroadcast(intent);

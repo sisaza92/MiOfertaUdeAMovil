@@ -29,6 +29,15 @@ public class EstudianteDaoImpl implements EstudianteDao{
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         db.delete(Contract.TABLE_NAME_ESTUDIANTE,null,null);
+
+        values.put(Contract.Column.ESTUDIANTE_NOMBRES,estudiante.getNombres());
+        values.put(Contract.Column.ESTUDIANTE_APELLIDOS, estudiante.getApellidos());
+        values.put(Contract.Column.ESTUDIANTE_CEDULA_ESTUDIANTE ,  estudiante.getCedula());
+        values.put(Contract.Column.ESTUDIANTE_FECHA_NACIMIENTO,  estudiante.getFechaDeNacimiento());
+        values.put(Contract.Column.ESTUDIANTE_EMAL, estudiante.getEmail());
+
+        Log.d("REGISTRO --> ","saveEstudiante: "+ estudiante.toString());
+        db.insertWithOnConflict(Contract.TABLE_NAME_ESTUDIANTE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     /**
@@ -67,8 +76,9 @@ public class EstudianteDaoImpl implements EstudianteDao{
         }else{
             if (nroRegistros<1){
                 Log.d("La BD no retorna: ", "Estudiante ------> Error");
+            }else {
+                Log.d("La BD retorna: ", "Mas de un Estudiante ------> Error");
             }
-            Log.d("La BD retorna: ", "Mas de un Estudiante ------> Error");
         }
 
         db.close();
