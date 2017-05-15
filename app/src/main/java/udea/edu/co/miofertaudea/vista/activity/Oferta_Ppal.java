@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +34,24 @@ public class Oferta_Ppal extends AppCompatActivity {
     private IntentFilter filtro;
     private BroadcastReceiver receptor;
 
-    Fragment materiasFragment;
-    ListView listaMaterias;
+    TextView mTVOfertaPPTanda;
+    TextView mTVOfertaPPImpedimentos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate");
         super.onCreate(savedInstanceState);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         setContentView(R.layout.activity_oferta_ppal);
         initCollapsingToolbar();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mTVOfertaPPTanda = (TextView) findViewById(R.id.TVOfertaPPTanda);
+        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.TVOfertaPPImpedimentos);
+
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -52,35 +59,7 @@ public class Oferta_Ppal extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-        /*
-        //Paso 1: Obtener la instancia del administrador de fragmentos
-        FragmentManager fragmentManager = getFragmentManager();
 
-        //Paso 2: Crear una nueva transacción
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        //Paso 3: Crear un nuevo fragmento y añadirlo
-
-        InfoAcademicaFragment infoAcademicaFragment = new InfoAcademicaFragment();
-        MateriasListFragment materiasListFragment = new MateriasListFragment();
-        ImpedimentosFragment impedimentosFragment = new ImpedimentosFragment();
-
-
-
-
-        transaction.add(R.id.mainLayout, infoAcademicaFragment);
-        transaction.add(R.id.mainLayout, materiasListFragment);
-        transaction.add(R.id.mainLayout, impedimentosFragment);
-
-
-
-        //Paso 4: Confirmar el cambio
-        transaction.commit();*/
-
-
-        Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate");
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
         getAllMateriasOfertadas();
 
     }
@@ -102,6 +81,9 @@ public class Oferta_Ppal extends AppCompatActivity {
      * Metodo que Crea un IntentService para llamar al servicio que lista las materias.
      */
     private void getAllMateriasOfertadas(){
+
+        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
+
         MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
         List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
         if(materiasOfertadas.size()>0){
@@ -125,13 +107,15 @@ public class Oferta_Ppal extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            // direrenciar cual de los Broadcast esta llegando
+
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
             MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
             List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
             Log.d("BROADCAST RECIBIDO", "onReceived");
             recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
 
-           // listaMaterias.setAdapter(new MateriaOfertadaListAdapter((Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
+
         }
     }
 
@@ -157,10 +141,10 @@ public class Oferta_Ppal extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle("HOLAAAAA");
+                    collapsingToolbar.setTitle("Hola");
                     isShow = true;
                 } else if (isShow) {
-                    collapsingToolbar.setTitle("CRISSSSS ");
+                    collapsingToolbar.setTitle("User");
                     isShow = false;
                 }
             }

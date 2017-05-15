@@ -18,15 +18,18 @@ import udea.edu.co.miofertaudea.modelo.dao.Implementations.EstudianteDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.GrupoDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.TandaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.EstudianteDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.TandaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
+import udea.edu.co.miofertaudea.modelo.dto.Tanda;
 
 /**
  * En esta clase se define que acciones se realizarán cuando sea consumido un servicio, ademas de
@@ -152,7 +155,7 @@ public class ServiceImpl extends IntentService {
 
 
         private void listarGruposMaterias(final String codigoMateria) {
-        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarGruposMaterias");
         ServiceFactory.getClienteRest().obtenerGrupos(codigoMateria, new Callback<List<Grupo>>() {
             @Override
             public void success(List<Grupo> grupos, Response response) {
@@ -204,15 +207,35 @@ public class ServiceImpl extends IntentService {
             @Override
             public void failure(RetrofitError error) {
 
+            }
+        });
+    }
+
+    private void obtenerTanda(String cedulaEstudiante) {
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerTanda");
+        ServiceFactory.getClienteRest().obtenerTanda(cedulaEstudiante, new Callback<Tanda>(){
+            @Override
+            public void success(Tanda tanda, Response response) {
+                //TODO quitar for
+                Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerTanda obtiene" +
+                        " la tanda: " +tanda.toString());
+
+                //puede que no este guardando bien
+                TandaDao tandaDao = new TandaDaoImpl();
+
+                tandaDao.saveTanda(tanda);
+                Toast.makeText(ServiceImpl.this, "Tanda Recibida Exitosamente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_TANDA");
+                //intent.putExtra("cedulaEstudiante",tanda.getCedula());
+                sendBroadcast(intent);
 
             }
 
+            @Override
+            public void failure(RetrofitError error) {
 
-
+            }
         });
-
-
-
     }
 
 

@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <TextView
-                    android:text="Materia"
+                    android:text="Materia:"
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                     android:id="@+id/tVMateria"
                     android:textColor="@color/black"/>
                 <TextView
-                    android:id="@+id/tVApocope"
+                    android:id="@+id/tVApocope:"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -58,7 +58,7 @@
                     android:layout_below="@id/title"
                     android:layout_gravity="center"
                     android:textColor="@color/black"
-                    android:text="Créditos"/>
+                    android:text="Créditos:"/>
                 <TextView
                     android:id="@+id/tVGrupo"
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/album_title"
                     android:layout_gravity="center"
-                    android:text="Grupo"/>
+                    android:text="Grupo:"/>
 
                 <TextView
                     android:id="@+id/tVHorario"
@@ -75,7 +75,7 @@
                     android:layout_below="@id/title"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
-                    android:text="Horario"/>
+                    android:text="Horario:"/>
 
             </LinearLayout>
             <LinearLayout

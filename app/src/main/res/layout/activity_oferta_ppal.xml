@@ -55,7 +55,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cris"
+                        android:text="UserName"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
 
@@ -74,19 +74,78 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColorHighlight="@color/black"
+                    android:text="Tanda:"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#Tanda"
+                    android:id="@+id/TVOfertaPPTanda"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColorHighlight="@color/black"
+                    android:text="Impedimentos:"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/TVOfertaPPImpedimentos"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
 

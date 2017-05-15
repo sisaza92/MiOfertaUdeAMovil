@@ -74,6 +74,7 @@ public class ProgramaActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
             ProgramaDao programaDao = new ProgramaDaoImpl();
             List<Programa> programas = programaDao.getProgramas();
