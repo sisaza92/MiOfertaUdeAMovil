@@ -71,4 +71,15 @@ public class Tanda {
     public void setHoraFin(Date horaFin) {
         this.horaFin = horaFin;
     }
+
+    @Override
+    public String toString() {
+        return "Tanda{" +
+                "nombre='" + nombre + '\'' +
+                ", nroTanda=" + nroTanda +
+                ", fecha=" + fecha.toString() +
+                ", horaInicio=" + horaInicio.toString() +
+                ", horaFin=" + horaFin.toString() +
+                '}';
+    }
 }

@@ -48,8 +48,8 @@ public interface ServiceInterface  {
      * Retorna la tanda en el programa/semestre, no está creado, deberá retornar
      * la estructura: numerotanda, fecha, hora
      */
-    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerTanda/{cedulaEstudiante}")
-    public void obtenerTanda(@Path("cedulaEstudiante") String cedula,Callback<Tanda> tanda);
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerTanda/{cedulaEstudiante}/{semestre}")
+    public void obtenerTanda(@Path("cedulaEstudiante") String cedula,@Path("semestre") String semestre,Callback<Tanda> tanda);
 
     /**
      * Retorna los impedimientos el programa, no está creado, deberá retornar la

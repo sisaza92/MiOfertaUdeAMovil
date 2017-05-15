@@ -61,6 +61,8 @@ public class ServiceImpl extends IntentService {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if ((networkInfo != null) && (networkInfo.isConnected())) {
+                String cedulaEstudiante;
+
                 switch (accion){
                     case "listarMaterias":
                         String idPrograma = intent.getStringExtra("idPrograma");
@@ -81,12 +83,20 @@ public class ServiceImpl extends IntentService {
                         listarGruposMaterias(codigoMateria);
                         break;
                     case "obtenerEstudiante":
-                        String cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
-                        Log.d("IMPORTANTE -->","Al servicio obtenerEstudiante le ha llegado el cedulaEstudiante: "
+                        cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                        Log.d("IMPORTANTE -->","Al servicio obtenerEstudiante le ha llegado la cedulaEstudiante: "
                                 +cedulaEstudiante);
                         obtenerEstudiante(cedulaEstudiante);
 
                     break;
+                    case "obtenerTanda":
+                        cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                        String semestre =  intent.getStringExtra("semestre");
+                        Log.d("IMPORTANTE -->","Al servicio obtenerTanda le ha llegado la cedulaEstudiante: "
+                                +cedulaEstudiante);
+                        obtenerTanda(cedulaEstudiante, semestre);
+
+                        break;
                 }
             } else {
                 // si no hay conexion muestra un mensaje avisando que no se realizó la sincronización.
@@ -115,6 +125,7 @@ public class ServiceImpl extends IntentService {
                     int size = materiasOfertadas.size();
                     Toast.makeText(ServiceImpl.this, "Materias Recibidas Exitosamente", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
+                    intent.putExtra("BroadcastType","Materias");
                     sendBroadcast(intent);
                 }
 
@@ -211,9 +222,9 @@ public class ServiceImpl extends IntentService {
         });
     }
 
-    private void obtenerTanda(String cedulaEstudiante) {
+    private void obtenerTanda(String cedulaEstudiante, String semestre) {
         Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerTanda");
-        ServiceFactory.getClienteRest().obtenerTanda(cedulaEstudiante, new Callback<Tanda>(){
+        ServiceFactory.getClienteRest().obtenerTanda(cedulaEstudiante, semestre, new Callback<Tanda>(){
             @Override
             public void success(Tanda tanda, Response response) {
                 //TODO quitar for
@@ -226,6 +237,7 @@ public class ServiceImpl extends IntentService {
                 tandaDao.saveTanda(tanda);
                 Toast.makeText(ServiceImpl.this, "Tanda Recibida Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_TANDA");
+                intent.putExtra("BroadcastType","Tanda");
                 //intent.putExtra("cedulaEstudiante",tanda.getCedula());
                 sendBroadcast(intent);
 
