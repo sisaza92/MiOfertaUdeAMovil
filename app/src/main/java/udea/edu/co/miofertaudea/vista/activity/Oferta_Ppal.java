@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import udea.edu.co.miofertaudea.R;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.EstudianteDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.TandaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.EstudianteDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.TandaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
@@ -40,6 +42,7 @@ public class Oferta_Ppal extends AppCompatActivity {
 
     private TextView mTVOfertaPPTanda;
     private TextView mTVOfertaPPImpedimentos;
+    private TextView mTVOfertaPPName;
 
     private Estudiante estudiante;
 
@@ -48,22 +51,24 @@ public class Oferta_Ppal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate");
         super.onCreate(savedInstanceState);
+        EstudianteDao estudianteDao = new EstudianteDaoImpl();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         setContentView(R.layout.activity_oferta_ppal);
         initCollapsingToolbar();
 
+
+
+        estudiante = (Estudiante) getIntent().getSerializableExtra("ESTUDIANTE");
+        Log.d("REGISTRO -->", "CLASE: Oferta_Ppal    METODO: onCreate recibe del " +
+                "login el objeto estudiante:" + estudiante.toString());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mTVOfertaPPTanda = (TextView) findViewById(R.id.TVOfertaPPTanda);
-        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.TVOfertaPPImpedimentos);
+        mTVOfertaPPTanda = (TextView) findViewById(R.id.tVOfertaPPTanda);
+        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
+        mTVOfertaPPName = (TextView) findViewById(R.id.tVOfertaPPName);
 
-        // verificar llega null
-        estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
-        //Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
-        //        " llego el estudiante: "+ estudiante.toString());
-
-
+        mTVOfertaPPName.setText(estudiante.getNombres());
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(mLayoutManager);
         //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -73,6 +78,12 @@ public class Oferta_Ppal extends AppCompatActivity {
 
 
         getAllMateriasOfertadas();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
     }
 

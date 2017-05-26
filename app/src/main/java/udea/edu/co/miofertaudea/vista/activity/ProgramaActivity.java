@@ -29,8 +29,9 @@ public class ProgramaActivity extends AppCompatActivity {
 
     private IntentFilter filtro;
     private BroadcastReceiver receptor;
+    private Estudiante estudiante;
 
-    ListView listaProgramas;
+    private ListView listaProgramas;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +40,8 @@ public class ProgramaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programa_layout);
 
-        Estudiante estudiante = (Estudiante) getIntent().getSerializableExtra("ESTUDIANTE");
-        Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: onCreate resive del " +
+        estudiante = (Estudiante) getIntent().getSerializableExtra("ESTUDIANTE");
+        Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: onCreate recibe del " +
                 "login el objeto estudiante:" + estudiante.toString());
 
         listaProgramas = (ListView) findViewById(R.id.listViewPrograma);
@@ -61,7 +62,7 @@ public class ProgramaActivity extends AppCompatActivity {
      */
 
     private void getProgramas() {
-
+        // consumir con la cedula del estudiante del intent
         Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: getProgramas");
         Intent listarProgramas = new Intent(ProgramaActivity.this, ServiceImpl.class);
         listarProgramas.putExtra("accion", "listarProgramas");
@@ -88,7 +89,7 @@ public class ProgramaActivity extends AppCompatActivity {
                 }
             Log.d("BROADCAST RECIBIDO", "onReceived");
 
-            listaProgramas.setAdapter(new ProgramaListAdapter((Activity) context, (ArrayList<Programa>) programas));
+            listaProgramas.setAdapter(new ProgramaListAdapter((Activity) context, (ArrayList<Programa>) programas, estudiante));
 
         }
     }

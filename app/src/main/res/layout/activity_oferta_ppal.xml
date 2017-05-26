@@ -55,6 +55,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tVOfertaPPName"
                         android:text="UserName"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
@@ -102,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="#Tanda"
-                    android:id="@+id/TVOfertaPPTanda"
+                    android:id="@+id/tVOfertaPPTanda"
                     />
             </LinearLayout>
 
@@ -123,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:id="@+id/TVOfertaPPImpedimentos"
+                    android:id="@+id/tVOfertaPPImpedimentos"
                     />
             </LinearLayout>
 

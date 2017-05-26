@@ -37,13 +37,18 @@ public class TempLoginActivity extends AppCompatActivity {
         Log.d("REGISTRO -->", "CLASE: TempLoginActivity    METODO: onCreate");
         filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVO_ESTUDIANTE");
 
+        receptor = new TimelineReceiver();
+        registerReceiver(receptor, filtro);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        receptor = new TimelineReceiver();
-        registerReceiver(receptor, filtro);
+        /*
+        lo que estaba aqui era lo que causaba que se abrieran varias actividades debido a que
+        creaba "receptor = new TimelineReceiver();" nuevamente
+         */
+
     }
 
     public void consultarOferta(View view) {
@@ -75,22 +80,21 @@ public class TempLoginActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
+            Log.d("BROADCAST RECIBIDO", "onReceived");
+            Log.d("REGISTRO -->", "CLASE: TimelineReciver(TempLoginActivity)   METODO: onReceive");
             EstudianteDao estudianteDao = new EstudianteDaoImpl();
             Estudiante estudiante = estudianteDao.getEstudiante();
             if(estudiante != null){
                 Log.d("IMPORTANTE-->", "CLASE: TimelineReciver(TempLoginActivity)" +
-                        "   METODO: SI ESTA TRAYENDO ESTUDIANTE DE LA BD: " +estudiante.toString());
+                        "   METODO:onReceive  SI ESTA TRAYENDO ESTUDIANTE DE LA BD: " +estudiante.toString());
+                Intent intentEstudiante = new Intent(context, ProgramaActivity.class);
+                intentEstudiante.putExtra("ESTUDIANTE",estudiante);
+                context.startActivity(intentEstudiante);
 
             }else{
                 Log.d("CRITICO-->", "CLASE: TimelineReciver(TempLoginActivity)" +
-                        "   METODO: NO ESTA TRAYENDO ESTUDIANTE DE LA BD");
+                        "   METODO:onReceive NO ESTA TRAYENDO ESTUDIANTE DE LA BD");
             }
-            Log.d("BROADCAST RECIBIDO", "onReceived");
-            Intent intentestudiante = new Intent(context, ProgramaActivity.class);
-            intentestudiante.putExtra("ESTUDIANTE",(Serializable) estudiante);
-            context.startActivity(intentestudiante);
 
         }
     }
