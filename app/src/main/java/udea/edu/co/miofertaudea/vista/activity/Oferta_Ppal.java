@@ -59,8 +59,8 @@ public class Oferta_Ppal extends AppCompatActivity {
         registerReceiver(receptor, filtro);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mTVOfertaPPTanda = (TextView) findViewById(R.id.TVOfertaPPTanda);
-        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.TVOfertaPPImpedimentos);
+        mTVOfertaPPTanda = (TextView) findViewById(R.id.tVOfertaPPTanda);
+        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
 
         // verificar llega null
         estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
@@ -142,11 +142,11 @@ public class Oferta_Ppal extends AppCompatActivity {
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive" + broadcastType);
             switch (broadcastType){
                 case "Materias":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
+                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
                             "con la Lista de Materias");
                     MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
                     List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
-                    Log.d("ADAPTER RECICLERVIEW", "onReceived");
+                    Log.d("BROADCAST RECIBIDO", "onReceived");
                     recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
                     break;
                 case "Tanda":
