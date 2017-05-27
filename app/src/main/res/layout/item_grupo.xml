@@ -9,43 +9,31 @@
         android:layout_height="match_parent"
         android:id="@+id/textViewGrupoHorario"
         android:text=""
-        android:backgroundTint="@color/Verde_UdeA"
-        android:background="@color/Verde_UdeA"
-        android:textColor="#ffffff"
         android:textStyle="bold"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textViewCupos"
         android:text=""
-        android:backgroundTint="@color/Verde_UdeA"
-        android:background="@color/Verde_UdeA"
-        android:textColor="#ffffff"
         android:textStyle="bold"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textViewAula"
         android:text="Aula: "
-        android:backgroundTint="@color/Verde_UdeA"
-        android:background="@color/Verde_UdeA"
-        android:textColor="#ffffff"
         android:textStyle="bold"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textViewProfesor"
         android:text="Nombre del Profesor: "
-        android:backgroundTint="@color/Verde_UdeA"
-        android:background="@color/Verde_UdeA"
-        android:textColor="#ffffff"
         android:textStyle="bold"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

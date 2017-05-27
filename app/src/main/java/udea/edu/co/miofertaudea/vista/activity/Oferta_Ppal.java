@@ -54,6 +54,10 @@ public class Oferta_Ppal extends AppCompatActivity {
         setContentView(R.layout.activity_oferta_ppal);
         initCollapsingToolbar();
 
+        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
+        receptor =  new TimelineReceiver();
+        registerReceiver(receptor, filtro);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mTVOfertaPPTanda = (TextView) findViewById(R.id.TVOfertaPPTanda);
         mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.TVOfertaPPImpedimentos);
@@ -79,8 +83,6 @@ public class Oferta_Ppal extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        receptor =  new TimelineReceiver();
-        registerReceiver(receptor, filtro);
     }
 
     @Override
@@ -94,12 +96,11 @@ public class Oferta_Ppal extends AppCompatActivity {
      */
     private void getAllMateriasOfertadas(){
 
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA");
-
         MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
         List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
         if(materiasOfertadas.size()>0){
             //listaMaterias.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
+
             recyclerView.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
         }else{
             String idPrograma =  getIntent().getStringExtra("idPrograma");
@@ -137,19 +138,19 @@ public class Oferta_Ppal extends AppCompatActivity {
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
 
             // direrenciar cual de los Broadcast esta llegando
-            String BroadcastType = intent.getStringExtra("BroadcastType");
-
-            switch (BroadcastType){
+            String broadcastType = intent.getStringExtra("BroadcastType");
+            Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive" + broadcastType);
+            switch (broadcastType){
                 case "Materias":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
+                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
                             "con la Lista de Materias");
                     MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
                     List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
-                    Log.d("BROADCAST RECIBIDO", "onReceived");
+                    Log.d("ADAPTER RECICLERVIEW", "onReceived");
                     recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
                     break;
                 case "Tanda":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
+                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
                             "con la Tanda");
                     TandaDao tandaDao = new TandaDaoImpl();
                     Tanda tanda = tandaDao.getTanda();
@@ -158,7 +159,7 @@ public class Oferta_Ppal extends AppCompatActivity {
                     break;
 
                 case "Impedimentos":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
+                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
                             "con los Impedimentos");
 
                     break;

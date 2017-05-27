@@ -6,4 +6,13 @@
     <color name="Verde_UdeA">#17780b</color>
     <color name="Verde_UdeA2">#279319</color>
     <color name="black">#000000</color>
+
+    <color name="primary">#66bb6a</color>
+    <color name="primary_dark">#338a3e</color>
+    <color name="primary_light">#98ee99</color>
+    <color name="primary_text">#000000</color>
+    <color name="secondary">#2e7d32</color>
+    <color name="secondary_dark">#005005</color>
+    <color name="secondary_light">#60ad5e</color>
+    <color name="secondary_text">#ffffff</color>
 </resources>

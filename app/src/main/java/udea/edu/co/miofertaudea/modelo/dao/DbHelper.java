@@ -123,6 +123,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
+    public void deleteDB(SQLiteDatabase db){
+        Log.d("REGISTRO -->"," CLASE: DbHelper METODO: onUpgrade");
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_MATERIA_OFERTADA);//Borrar datos
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_PROGRAMA);//Borrar datos tabla programa
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla estudiante
+        onCreate(db);//Crear Tabla de nuevo
+    }
+
 
 
 }

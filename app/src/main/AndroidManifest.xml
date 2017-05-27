@@ -15,10 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".vista.activity.ProgramaActivity">
-
-        </activity>
+        android:theme="@style/MaterialPalette">
 
         <activity android:name=".vista.activity.Oferta_Ppal" />
         <activity android:name=".vista.activity.GrupoActivity" />
