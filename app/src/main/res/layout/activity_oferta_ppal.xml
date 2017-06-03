@@ -48,13 +48,14 @@
                         android:id="@+id/love_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HOLA"
+                        android:text="Materias Ofertadas"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
                         android:id="@+id/tVOfertaPPName"
                         android:text="UserName"
                         android:textColor="@android:color/white"

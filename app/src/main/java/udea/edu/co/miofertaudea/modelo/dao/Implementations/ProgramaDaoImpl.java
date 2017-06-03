@@ -44,7 +44,6 @@ public class ProgramaDaoImpl implements ProgramaDao {
             values.put(Contract.Column.PROGRAMA_CODIGO_PROGRAMA, programa.getCodigoPrograma());
             values.put(Contract.Column.PROGRAMA_NOMBRE_PROGRAMA, programa.getNombrePrograma());
             values.put(Contract.Column.PROGRAMA_ESTADO, programa.getEstado());
-            values.put(Contract.Column.PROGRAMA_ULTIMO_SEMESTRE, programa.getUltimoSemestre());
 
             Log.d("REGISTRO -->", programa.toString());
             db.insertWithOnConflict(Contract.TABLE_NAME_PROGRAMA, null, values, SQLiteDatabase.CONFLICT_IGNORE);
@@ -74,12 +73,10 @@ public class ProgramaDaoImpl implements ProgramaDao {
                 int indxCodigoPrograma = cursor.getColumnIndex(Contract.Column.PROGRAMA_CODIGO_PROGRAMA);
                 int indxNombreMateria = cursor.getColumnIndex(Contract.Column.PROGRAMA_NOMBRE_PROGRAMA);
                 int indxEstado = cursor.getColumnIndex(Contract.Column.PROGRAMA_ESTADO);
-                int indxUltimoSemestre = cursor.getColumnIndex(Contract.Column.PROGRAMA_ULTIMO_SEMESTRE);
 
                 programa.setCodigoPrograma(cursor.getInt(indxCodigoPrograma));
                 programa.setNombrePrograma(cursor.getString(indxNombreMateria));
                 programa.setEstado(cursor.getString(indxEstado));
-                programa.setUltimoSemestre(cursor.getString(indxUltimoSemestre));
 
                 Log.d("SE HA CONSULTADO: ", programa.toString());
                 programas.add(programa);

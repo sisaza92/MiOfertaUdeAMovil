@@ -24,13 +24,15 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
     private Activity activity;
     private ArrayList<Programa> listaProgramas;
     private Estudiante estudiante;
+    private Long semestreAcademico;
 
-    public ProgramaListAdapter(Activity activity, ArrayList<Programa> programas , Estudiante estudiante) {
+    public ProgramaListAdapter(Activity activity, ArrayList<Programa> programas , Estudiante estudiante,Long semestreAcademico) {
 
         super(activity, R.layout.item_programa);
         this.activity = activity;
         this.listaProgramas = programas;
         this.estudiante = estudiante;
+        this.semestreAcademico = semestreAcademico;
     }
 
     static class ViewHolder {
@@ -74,12 +76,19 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
 
                 Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
                 String idPrograma = "" + listaProgramas.get(position).getCodigoPrograma();
+
+                Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener se tiene el estudiante: "+
+                estudiante.toString());
+
+
+                // se agrega la informacion a enviar a la actividad
                 listarMaterias.putExtra("ESTUDIANTE",estudiante);
-                // eliminar lo que esta quemado
                 listarMaterias.putExtra("idPrograma", idPrograma);
-                listarMaterias.putExtra("idEstudiante","101700");
-                //
+                listarMaterias.putExtra("semestreAcademico",semestreAcademico);
+
+                // se inicia la otra actividad
                 v.getContext().startActivity(listarMaterias);
+
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
                 Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
                 //v.setBackgroundResource(R.color.colorPrimaryDark);

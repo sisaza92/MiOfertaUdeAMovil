@@ -40,8 +40,12 @@ public class Oferta_Ppal extends AppCompatActivity {
 
     private TextView mTVOfertaPPTanda;
     private TextView mTVOfertaPPImpedimentos;
+    private TextView mtVOfertaPPName;
+
+
 
     private Estudiante estudiante;
+    Long semestreAcademico;
 
 
     @Override
@@ -58,14 +62,25 @@ public class Oferta_Ppal extends AppCompatActivity {
         receptor =  new TimelineReceiver();
         registerReceiver(receptor, filtro);
 
+        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_NUEVA_TANDA");
+        receptor =  new TimelineReceiver();
+        registerReceiver(receptor, filtro);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mTVOfertaPPTanda = (TextView) findViewById(R.id.tVOfertaPPTanda);
         mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
+        mtVOfertaPPName = (TextView) findViewById(R.id.tVOfertaPPName);
 
-        // verificar llega null
+
         estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
-        //Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
-        //        " llego el estudiante: "+ estudiante.toString());
+        semestreAcademico =  getIntent().getLongExtra("semestreAcademico",0);
+        Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
+                " llego el estudiante: "+ estudiante.toString());
+
+        Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
+                " llego el semestreAcaemico: "+ semestreAcademico);
+
+        mtVOfertaPPName.setText("Estudiante: "+ estudiante.getNombres()+" "+estudiante.getApellidos());
 
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -100,11 +115,12 @@ public class Oferta_Ppal extends AppCompatActivity {
         List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
         if(materiasOfertadas.size()>0){
             //listaMaterias.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
-
             recyclerView.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
         }else{
+
             String idPrograma =  getIntent().getStringExtra("idPrograma");
-            String idEstudiante = getIntent().getStringExtra("idEstudiante");
+            String idEstudiante = estudiante.getCedula();
+
             Log.d("REGISTRO -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas");
             Log.d("IMPORTANTE -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas" +
                     " codigo del programa enviado es: " +idPrograma+ "  y el idEstudiante enviado es: "+idEstudiante);
@@ -141,6 +157,7 @@ public class Oferta_Ppal extends AppCompatActivity {
             String broadcastType = intent.getStringExtra("BroadcastType");
             Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive" + broadcastType);
             switch (broadcastType){
+
                 case "Materias":
                     Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
                             "con la Lista de Materias");
@@ -149,6 +166,7 @@ public class Oferta_Ppal extends AppCompatActivity {
                     Log.d("BROADCAST RECIBIDO", "onReceived");
                     recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
                     break;
+
                 case "Tanda":
                     Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
                             "con la Tanda");
@@ -195,10 +213,10 @@ public class Oferta_Ppal extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle("Hola");
+                    collapsingToolbar.setTitle("Materias Ofertadas");
                     isShow = true;
                 } else if (isShow) {
-                    collapsingToolbar.setTitle("User");
+                    collapsingToolbar.setTitle("");
                     isShow = false;
                 }
             }

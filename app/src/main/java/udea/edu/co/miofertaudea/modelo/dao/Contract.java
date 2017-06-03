@@ -51,7 +51,7 @@ public class Contract {
         public static final String PROGRAMA_CODIGO_PROGRAMA = "codigoPrograma";
         public static final String PROGRAMA_NOMBRE_PROGRAMA = "nombrePrograma";
         public static final String PROGRAMA_ESTADO = "estado";
-        public static final String PROGRAMA_ULTIMO_SEMESTRE = "ultimoSemestre";
+        //public static final String PROGRAMA_ULTIMO_SEMESTRE = "ultimoSemestre";
 
         /**
          * Constantes que especifican los nombres de las columnas de la tabla tanda

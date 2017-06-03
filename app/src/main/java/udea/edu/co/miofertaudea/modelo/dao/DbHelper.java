@@ -43,12 +43,11 @@ public class DbHelper extends SQLiteOpenHelper {
                 );
 
         String sql2=String
-                .format("create table %s(%s int,%s text, %s text, %s text)",
+                .format("create table %s(%s long,%s text, %s text)",
                         Contract.TABLE_NAME_PROGRAMA,
                         Contract.Column.PROGRAMA_CODIGO_PROGRAMA,
                         Contract.Column.PROGRAMA_NOMBRE_PROGRAMA,
-                        Contract.Column.PROGRAMA_ESTADO,
-                        Contract.Column.PROGRAMA_ULTIMO_SEMESTRE
+                        Contract.Column.PROGRAMA_ESTADO
                 );
         String sql3=String
                 .format("create table %s(%s text,%s text,%s int, %s int, %s text,%s text,%s text)",

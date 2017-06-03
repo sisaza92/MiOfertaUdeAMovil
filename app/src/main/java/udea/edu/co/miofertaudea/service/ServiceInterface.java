@@ -26,8 +26,8 @@ public interface ServiceInterface  {
      * Retorna los programas del usuario y su ultimo semestre, no está creado,
      * deberá retornar la estructura: programa, nombreprograma, estado, semestre
      */
-    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerProgramaYUltimoSemestre/{cedulaEstudiante}")
-    public void obtenerProgramaYUltimoSemestre(@Path("cedulaEstudiante") String cedulaEstudiante, Callback<List<Programa>> callback);
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerProgramas/{cedulaEstudiante}")
+    public void obtenerProgramas(@Path("cedulaEstudiante") String cedulaEstudiante, Callback<List<Programa>> callback);
 
     /**
      * Retorna las materias que está cursando en el programa/semestre, no está creado,
@@ -47,6 +47,7 @@ public interface ServiceInterface  {
     /**
      * Retorna la tanda en el programa/semestre, no está creado, deberá retornar
      * la estructura: numerotanda, fecha, hora
+     * documento:  indx:
      */
     @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerTanda/{cedulaEstudiante}/{semestre}")
     public void obtenerTanda(@Path("cedulaEstudiante") String cedula,@Path("semestre") String semestre,Callback<Tanda> tanda);
@@ -61,9 +62,11 @@ public interface ServiceInterface  {
     /**
      * Retorna  el un objeto Estudiante en formato json, no está creado, deberá retornar la
      * estructura:
+     * basado en el servicio consultapersonabasicomares(String cedula)
+     * se encuentra en el indx 9 de doc DefinicionServiciosMARES Cliente(2).xls
      */
     @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerInfoEstudiante/{cedulaEstudiante}")
-    public void obtenerEstudiante(@Path("cedulaEstudiante") String cedula,Callback<Estudiante> estudiante);
+    public void obtenerInfoEstudiante(@Path("cedulaEstudiante") String cedula, Callback<Estudiante> estudiante);
 
 
 

@@ -27,7 +27,6 @@ import udea.edu.co.miofertaudea.modelo.dao.Interfaces.TandaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
-import udea.edu.co.miofertaudea.modelo.dto.Grupo;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.modelo.dto.Tanda;
 
@@ -73,7 +72,8 @@ public class ServiceImpl extends IntentService {
                         listarMaterias(); // idPrograma en el metodo
                         break;
                     case "listarProgramas":
-                        listarProgramas();
+                        cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                        listarProgramas(cedulaEstudiante);
                         break;
 
                     case "listarGrupos":
@@ -82,9 +82,9 @@ public class ServiceImpl extends IntentService {
                                 +codigoMateria);
                         listarGruposMaterias(codigoMateria);
                         break;
-                    case "obtenerEstudiante":
+                    case "obtenerInfoEstudiante":
                         cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
-                        Log.d("IMPORTANTE -->","Al servicio obtenerEstudiante le ha llegado la cedulaEstudiante: "
+                        Log.d("IMPORTANTE -->","Al servicio obtenerInfoEstudiante le ha llegado la cedulaEstudiante: "
                                 +cedulaEstudiante);
                         obtenerEstudiante(cedulaEstudiante);
 
@@ -137,9 +137,9 @@ public class ServiceImpl extends IntentService {
             });
     }
 
-    private void listarProgramas() {
+    private void listarProgramas(String cedula) {
         Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarProgramas");
-        ServiceFactory.getClienteRest().obtenerProgramaYUltimoSemestre("101700", new Callback<List<Programa>>() {
+        ServiceFactory.getClienteRest().obtenerProgramas(cedula, new Callback<List<Programa>>() {
             @Override
             public void success(List<Programa> programas, Response response) {
                 //TODO quitar for
@@ -164,8 +164,7 @@ public class ServiceImpl extends IntentService {
         });
     }
 
-
-        private void listarGruposMaterias(final String codigoMateria) {
+    private void listarGruposMaterias(final String codigoMateria) {
         Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: listarGruposMaterias");
         ServiceFactory.getClienteRest().obtenerGrupos(codigoMateria, new Callback<List<Grupo>>() {
             @Override
@@ -196,12 +195,12 @@ public class ServiceImpl extends IntentService {
         }
 
     private void obtenerEstudiante(String cedulaEstudiante) {
-        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerEstudiante");
-        ServiceFactory.getClienteRest().obtenerEstudiante(cedulaEstudiante, new Callback<Estudiante>(){
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerInfoEstudiante");
+        ServiceFactory.getClienteRest().obtenerInfoEstudiante(cedulaEstudiante, new Callback<Estudiante>(){
             @Override
             public void success(Estudiante estudiante, Response response) {
                 //TODO quitar for
-                Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerEstudiante obtiene" +
+                Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerInfoEstudiante obtiene" +
                         " el estudiante: " +estudiante.toString());
 
                 //puede que no este guardando bien

@@ -29,11 +29,14 @@ import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
 import udea.edu.co.miofertaudea.vista.adapter.ProgramaListAdapter;
 
+import static udea.edu.co.miofertaudea.util.ContextProvider.getContext;
+
 public class TempLoginActivity extends AppCompatActivity {
 
     private IntentFilter filtroEstudiante,filtroProgramas;
     private BroadcastReceiver receptorEstudiante, receptorProgramas;
-    private EditText ETloginCedulaEstudiante;
+    private EditText eTloginCedulaEstudiante, eTloginSemestreAcademico;
+    private Long semestreAcademico;
     private Estudiante estudiante;
 
     @Override
@@ -49,8 +52,11 @@ public class TempLoginActivity extends AppCompatActivity {
         //
 
         setContentView(R.layout.activity_temp_login);
-        ETloginCedulaEstudiante = (EditText) findViewById(R.id.ETloginCedulaEstudiante);
+        eTloginCedulaEstudiante = (EditText) findViewById(R.id.ETloginCedulaEstudiante);
+        eTloginSemestreAcademico = (EditText) findViewById(R.id.ETloginSemestreAcademico);
+
         Log.d("REGISTRO -->", "CLASE: TempLoginActivity    METODO: onCreate");
+
         filtroEstudiante = new IntentFilter("udea.edu.co.miofertaudea.NUEVO_ESTUDIANTE");
         receptorEstudiante = new TimelineReceiverEstudiante();
         registerReceiver(receptorEstudiante, filtroEstudiante);
@@ -65,28 +71,34 @@ public class TempLoginActivity extends AppCompatActivity {
         super.onResume();
     }
 
+
     public void consultarOferta(View view) {
-        String cedula = ETloginCedulaEstudiante.getText().toString();
-        if(cedula==null){
+        String cedula = eTloginCedulaEstudiante.getText().toString();
+        String semestreIngresado = eTloginSemestreAcademico.getText().toString();
+
+
+        if(cedula==null || cedula.equals("")){
+            Toast.makeText(TempLoginActivity.this, "Debe ingresar una cédula", Toast.LENGTH_LONG).show();
+        }else{
+            getEstudiante(cedula);
+        }
+
+        if(semestreIngresado==null || semestreIngresado.equals("")){
             Toast.makeText(TempLoginActivity.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
         }else{
             //verificar que si sean las que estan quemadas
-            getEstudiante(cedula);
-
+            semestreAcademico = Long.parseLong(semestreIngresado);
         }
-
-
-
     }
     /**
      * Metodo que Crea un IntentService para llamar al servicio que obtiene la informacion del estudiante.
      */
     public void getEstudiante(String cedula) {
         Log.d("REGISTRO -->", "CLASE: TempLoginActivity    METODO: getEstudiante");
-        Intent obtenerEstudiante = new Intent(TempLoginActivity.this, ServiceImpl.class);
-        obtenerEstudiante.putExtra("accion", "obtenerEstudiante");
-        obtenerEstudiante.putExtra("cedulaEstudiante",cedula);
-        startService(obtenerEstudiante);
+        Intent obtenerInfoEstudianteIntent = new Intent(TempLoginActivity.this, ServiceImpl.class);
+        obtenerInfoEstudianteIntent.putExtra("accion", "obtenerInfoEstudiante");
+        obtenerInfoEstudianteIntent.putExtra("cedulaEstudiante",cedula);
+        startService(obtenerInfoEstudianteIntent);
     }
 
     /**
@@ -95,9 +107,10 @@ public class TempLoginActivity extends AppCompatActivity {
     private void getProgramas() {
 
         Log.d("REGISTRO -->", "CLASE: ProgramaActivity    METODO: getProgramas");
-        Intent listarProgramas = new Intent(TempLoginActivity.this, ServiceImpl.class);
-        listarProgramas.putExtra("accion", "listarProgramas");
-        startService(listarProgramas);
+        Intent listarProgramasIntent = new Intent(TempLoginActivity.this, ServiceImpl.class);
+        listarProgramasIntent.putExtra("cedulaEstudiante",estudiante.getCedula());
+        listarProgramasIntent.putExtra("accion", "listarProgramas");
+        startService(listarProgramasIntent);
     }
 
 
@@ -133,27 +146,58 @@ public class TempLoginActivity extends AppCompatActivity {
             Log.d("REGISTRO -->", "CLASE: TimelineReceiverProgramas(TempLoginActivity)   METODO: onReceive");
             ProgramaDao programaDao = new ProgramaDaoImpl();
             List<Programa> programas = programaDao.getProgramas();
+
             if(programas.size()>0){
                 Log.d("IMPORTANTE-->", "CLASE: TimelineReciver   METODO: SI ESTA TRAYENDO PROGRAMAS DE LA BD Y SON: ");
+
                 for (Programa p: programas) {
                     Log.d("PROGRAMA -->:",p.toString());
                 }
+
+                if(programas.size()==1) {
+
+                    Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
+                    String idPrograma = "" + programas.get(0).getCodigoPrograma();
+
+                    Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener se tiene el estudiante: "+
+                            estudiante.toString());
+
+
+                    Log.d("REGISTRO -->", "CLASE: TempLoginActivity    METODO: consultarOferta ---->" +
+                            "SemestreIngresado: " +semestreAcademico.toString());
+
+                    // se agrega la informacion a enviar a la actividad
+                    listarMaterias.putExtra("ESTUDIANTE",estudiante);
+                    listarMaterias.putExtra("idPrograma", idPrograma);
+                    listarMaterias.putExtra("semestreAcademico",semestreAcademico);
+
+                    // se inicia la otra actividad
+                    startActivity(listarMaterias);
+
+
+                }else {
+
+                    Log.d("BROADCAST RECIBIDO", "onReceived");
+                    ProgramaListAdapter programaListAdapter = new ProgramaListAdapter((Activity) context, (ArrayList<Programa>) programas,
+                            estudiante, semestreAcademico);
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TempLoginActivity.this);
+
+                    builderSingle.setTitle("Seleccione un Programa");
+                    builderSingle.setAdapter(programaListAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    builderSingle.show();
+                }
+
+
             }else{
                 Log.d("CRITICO-->", "CLASE: TimelineReciver   METODO: NO ESTA TRAYENDO PROGRAMAS DE LA BD");
+                Toast.makeText(TempLoginActivity.this, "Con la información ", Toast.LENGTH_LONG).show();
             }
-            Log.d("BROADCAST RECIBIDO", "onReceived");
-            ProgramaListAdapter programaListAdapter = new ProgramaListAdapter((Activity) context, (ArrayList<Programa>) programas,estudiante);
-            //listaProgramas.setAdapter(new ProgramaListAdapter((Activity) context, (ArrayList<Programa>) programas));
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(TempLoginActivity.this);
 
-            builderSingle.setTitle("Seleccione un Programa");
-            builderSingle.setAdapter(programaListAdapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            builderSingle.show();
         }
     }
 

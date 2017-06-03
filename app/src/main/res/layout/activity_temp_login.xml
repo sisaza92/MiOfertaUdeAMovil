@@ -8,9 +8,9 @@
     tools:context="udea.edu.co.miofertaudea.vista.activity.TempLoginActivity">
 
     <ImageView
-
+        android:layout_marginTop="20dp"
         android:layout_width="244dp"
-        android:layout_height="343dp"
+        android:layout_height="220dp"
         android:adjustViewBounds="true"
         android:src="@drawable/escudo_udea"
         android:layout_gravity="center"
@@ -23,8 +23,17 @@
         android:imeOptions="actionSend"
         android:gravity="center"
         android:id="@+id/ETloginCedulaEstudiante"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese El Semestre Academico"
+        android:imeOptions="actionSend"
+        android:gravity="center"
+        android:id="@+id/ETloginSemestreAcademico"/>
+
     <Button
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -32,7 +41,5 @@
         android:text="Consultar Oferta"
         android:onClick="consultarOferta"
         android:id="@+id/BTloginConsultar"/>
-
-
 
 </LinearLayout>
