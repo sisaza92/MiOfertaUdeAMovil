@@ -9,43 +9,35 @@ import java.util.Date;
 
 /**
  * Representa la tanda asignada a un estudiante para su respectiva Matricula.
- * @author CristianCamilo
+ * @author santiago
  */
 public class Tanda {
 
     //para consumir el servicio necesita cedula semestre
+    private Long numero;
     private String nombre;
-    private int nroTanda;
-    private Date fecha;
-    private Date horaInicio;
-    private Date horaFin;
+    private String fecha;
+    private Integer horaInicial;
+    private Integer horaFinal;
 
     public Tanda() {
 
     }
 
-    public Tanda(String nombre, int nroTanda, Date fecha, Date horaInicio, Date horaFin) {
+    public Tanda(Long numero, String nombre, String fecha, Integer horaInicial, Integer horaFinal) {
+        this.numero = numero;
         this.nombre = nombre;
-        this.nroTanda = nroTanda;
         this.fecha = fecha;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
+        this.horaInicial = horaInicial;
+        this.horaFinal = horaFinal;
     }
 
-    public int getNroTanda() {
-        return nroTanda;
+    public Long getNumero() {
+        return numero;
     }
 
-    public void setNroTanda(int nroTanda) {
-        this.nroTanda = nroTanda;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setNumero(Long numero) {
+        this.numero = numero;
     }
 
     public String getNombre() {
@@ -56,30 +48,38 @@ public class Tanda {
         this.nombre = nombre;
     }
 
-    public Date getHoraInicio() {
-        return horaInicio;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setHoraInicio(Date horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
-    public Date getHoraFin() {
-        return horaFin;
+    public Integer getHoraInicial() {
+        return horaInicial;
     }
 
-    public void setHoraFin(Date horaFin) {
-        this.horaFin = horaFin;
+    public void setHoraInicial(Integer horaInicial) {
+        this.horaInicial = horaInicial;
+    }
+
+    public Integer getHoraFinal() {
+        return horaFinal;
+    }
+
+    public void setHoraFinal(Integer horaFinal) {
+        this.horaFinal = horaFinal;
     }
 
     @Override
     public String toString() {
         return "Tanda{" +
-                "nombre='" + nombre + '\'' +
-                ", nroTanda=" + nroTanda +
-                ", fecha=" + fecha.toString() +
-                ", horaInicio=" + horaInicio.toString() +
-                ", horaFin=" + horaFin.toString() +
+                "numero=" + numero +
+                ", nombre='" + nombre + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", horaInicial=" + horaInicial +
+                ", horaFinal=" + horaFinal +
                 '}';
     }
 }
