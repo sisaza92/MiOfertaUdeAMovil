@@ -6,16 +6,25 @@ package udea.edu.co.miofertaudea.modelo.dto;
  */
 public class Impedimento {
     
-    private String semestre;
+    private Long semestre;
     private String tipo;
     private String impedimento;
 
+    public Impedimento(){
 
-    public String getSemestre() {
+    }
+
+    public Impedimento(Long semestre, String tipo, String impedimento) {
+        this.semestre = semestre;
+        this.tipo = tipo;
+        this.impedimento = impedimento;
+    }
+
+    public Long getSemestre() {
         return semestre;
     }
 
-    public void setSemestre(String semestre) {
+    public void setSemestre(Long semestre) {
         this.semestre = semestre;
     }
 
@@ -34,5 +43,13 @@ public class Impedimento {
     public void setImpedimento(String impedimento) {
         this.impedimento = impedimento;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Impedimento{" +
+                "semestre=" + semestre +
+                ", tipo='" + tipo + '\'' +
+                ", impedimento='" + impedimento + '\'' +
+                '}';
+    }
 }
