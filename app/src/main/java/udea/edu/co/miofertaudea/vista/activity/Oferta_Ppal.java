@@ -1,7 +1,6 @@
 package udea.edu.co.miofertaudea.vista.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,12 +33,16 @@ import udea.edu.co.miofertaudea.vista.adapter.MateriaOfertadaListAdapter;
 public class Oferta_Ppal extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private IntentFilter filtro;
-    private BroadcastReceiver receptor;
+    private IntentFilter filtroMaterias,filtroTanda,filtroImpedimento;
+    private BroadcastReceiver receptorMaterias,receptorTanda,receptorImpedimento;
 
-    private TextView mTVOfertaPPTanda;
+
     private TextView mTVOfertaPPImpedimentos;
     private TextView mtVOfertaPPName;
+
+
+    //TextView para la tanda
+    private TextView mTVOfertaPPTandaFecha,mTVOfertaPPTandaHoraInicial,mTVOfertaPPTandaHoraFinal;
 
 
 
@@ -58,18 +60,28 @@ public class Oferta_Ppal extends AppCompatActivity {
         setContentView(R.layout.activity_oferta_ppal);
         initCollapsingToolbar();
 
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
-        receptor =  new TimelineReceiver();
-        registerReceiver(receptor, filtro);
+        // filtroMaterias para el servicio que de las materias ofertadas
+        filtroMaterias = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
+        receptorMaterias =  new TimelineReceiverMaterias();
+        registerReceiver(receptorMaterias, filtroMaterias);
 
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_NUEVA_TANDA");
-        receptor =  new TimelineReceiver();
-        registerReceiver(receptor, filtro);
+        // filfro para el servicio de la tanda de matricula
+        filtroTanda = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
+        receptorTanda =  new TimelineReceiverTanda();
+        registerReceiver(receptorTanda, filtroTanda);
+
+        // filfro para el servicio de los impedimentos de matricula
+        //filtroImpedimento = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
+        //receptorImpedimento =  new TimelineReceiverTanda();
+        //registerReceiver(receptorImpedimento, filtroImpedimento);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mTVOfertaPPTanda = (TextView) findViewById(R.id.tVOfertaPPTanda);
         mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
         mtVOfertaPPName = (TextView) findViewById(R.id.tVOfertaPPName);
+
+        mTVOfertaPPTandaFecha = (TextView) findViewById(R.id.tVOfertaPPTandaFecha);
+        mTVOfertaPPTandaHoraInicial = (TextView) findViewById(R.id.tVOfertaPPTandaHoraInicial);
+        mTVOfertaPPTandaHoraFinal = (TextView) findViewById(R.id.tVOfertaPPTandaHoraFinal);
 
 
         estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
@@ -88,10 +100,10 @@ public class Oferta_Ppal extends AppCompatActivity {
         //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //getTanda();
+        getTanda();
 
 
-        getAllMateriasOfertadas();
+        //getAllMateriasOfertadas();
 
     }
 
@@ -103,7 +115,7 @@ public class Oferta_Ppal extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(receptor);
+        unregisterReceiver(receptorMaterias);
     }
 
     /**
@@ -136,60 +148,55 @@ public class Oferta_Ppal extends AppCompatActivity {
      */
     private void getTanda(){
 
-        filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
+        filtroMaterias = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
             Intent obtenerTanda = new Intent(Oferta_Ppal.this, ServiceImpl.class);
             obtenerTanda.putExtra("accion", "obtenerTanda");
-            obtenerTanda.putExtra("cedulaEstudiante","101700");
-            obtenerTanda.putExtra("semestre","20172");
+            obtenerTanda.putExtra("cedulaEstudiante",estudiante.getCedula());
+            obtenerTanda.putExtra("semestreAcademico",semestreAcademico);
 
             startService(obtenerTanda);
 
     }
 
-    class TimelineReceiver extends BroadcastReceiver {
+    class TimelineReceiverMaterias extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive");
+            Log.d("REGISTRO -->", "CLASE: TimelineReceiverMaterias   METODO: onReceive");
 
-            // direrenciar cual de los Broadcast esta llegando
-            String broadcastType = intent.getStringExtra("BroadcastType");
-            Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive" + broadcastType);
-            switch (broadcastType){
-
-                case "Materias":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se resive el Broadcast" +
-                            "con la Lista de Materias");
-                    MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
-                    List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
-                    Log.d("BROADCAST RECIBIDO", "onReceived");
-                    recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
-                    break;
-
-                case "Tanda":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
-                            "con la Tanda");
-                    TandaDao tandaDao = new TandaDaoImpl();
-                    Tanda tanda = tandaDao.getTanda();
-                    mTVOfertaPPTanda.setText(tanda.toString());
-
-                    break;
-
-                case "Impedimentos":
-                    Log.d("REGISTRO -->", "CLASE: TimelineReciver   METODO: onReceive  -------> se recibe el Broadcast" +
-                            "con los Impedimentos");
-
-                    break;
-
-            }
-
-
-
-
-
+            MateriaOfertadaDao materiaOfertadaDao  = new MateriaOfertadaDaoImpl();
+            List<MateriaOfertada> materiasOfertadas = materiaOfertadaDao.getAllMateriasOfertadas();
+            Log.d("BROADCAST RECIBIDO", "onReceived");
+            recyclerView.setAdapter(new MateriaOfertadaListAdapter( (Activity) context, (ArrayList<MateriaOfertada>) materiasOfertadas));
         }
     }
+
+    class TimelineReceiverTanda extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("REGISTRO -->", "CLASE: TimelineReceiverTanda   METODO: onReceive");
+
+            TandaDao tandaDao = new TandaDaoImpl();
+            Tanda tanda = tandaDao.getTanda();
+
+            if(tanda != null){
+                Log.d("IMPORTANTE-->", "CLASE: TimelineReceiverTanda" +
+                        "   METODO: SI ESTA TRAYENDO TANDA DE LA BD: " +tanda.toString());
+                // logica cuando llegue la tanda
+                mTVOfertaPPTandaFecha.setText(tanda.getFecha());
+                mTVOfertaPPTandaHoraInicial.setText(tanda.toSringHoraInicial());
+                mTVOfertaPPTandaHoraFinal.setText(tanda.toSringHoraFinal());
+                getAllMateriasOfertadas();
+
+            }else{
+                Log.d("CRITICO-->", "CLASE: TimelineReceiverTanda" +
+                        "   METODO: NO ESTA TRAYENDO TANDA DE LA BD");
+            }
+        }
+    }
+
 
     /**
      * Initializing collapsing toolbar

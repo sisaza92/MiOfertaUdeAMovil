@@ -91,9 +91,12 @@ public class ServiceImpl extends IntentService {
                     break;
                     case "obtenerTanda":
                         cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
-                        String semestre =  intent.getStringExtra("semestre");
+                        Long semestre =  intent.getLongExtra("semestreAcademico",0);
                         Log.d("IMPORTANTE -->","Al servicio obtenerTanda le ha llegado la cedulaEstudiante: "
                                 +cedulaEstudiante);
+                        Log.d("IMPORTANTE -->","Al servicio obtenerTanda le ha llegado el semestre: "
+                                +semestre);
+
                         obtenerTanda(cedulaEstudiante, semestre);
 
                         break;
@@ -221,7 +224,7 @@ public class ServiceImpl extends IntentService {
         });
     }
 
-    private void obtenerTanda(String cedulaEstudiante, String semestre) {
+    private void obtenerTanda(String cedulaEstudiante, Long semestre) {
         Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerTanda");
         ServiceFactory.getClienteRest().obtenerTanda(cedulaEstudiante, semestre, new Callback<Tanda>(){
             @Override

@@ -50,7 +50,7 @@ public interface ServiceInterface  {
      * documento:  indx:
      */
     @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerTanda/{cedulaEstudiante}/{semestre}")
-    public void obtenerTanda(@Path("cedulaEstudiante") String cedula,@Path("semestre") String semestre,Callback<Tanda> tanda);
+    public void obtenerTanda(@Path("cedulaEstudiante") String cedula,@Path("semestre") Long semestre,Callback<Tanda> tanda);
 
     /**
      * Retorna los impedimientos el programa, no está creado, deberá retornar la

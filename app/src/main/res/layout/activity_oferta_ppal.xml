@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_backdrop_height"
+        android:layout_height="200dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -83,9 +83,62 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColorHighlight="@color/black"
+                android:text="Tanda:"
+                />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColorHighlight="@color/black"
+                android:text="Fecha:"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#Tanda"
+                android:id="@+id/tVOfertaPPTandaFecha"
+                />
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColorHighlight="@color/black"
+                android:text="Hora Inicial: "
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#Tanda"
+                android:id="@+id/tVOfertaPPTandaHoraInicial"
+                />
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,13 +151,14 @@
                     android:layout_height="wrap_content"
                     android:textSize="14dp"
                     android:textColorHighlight="@color/black"
-                    android:text="Tanda:"
+                    android:text="Hora Final: "
                     />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="#Tanda"
-                    android:id="@+id/tVOfertaPPTanda"
+                    android:id="@+id/tVOfertaPPTandaHoraFinal"
                     />
             </LinearLayout>
 

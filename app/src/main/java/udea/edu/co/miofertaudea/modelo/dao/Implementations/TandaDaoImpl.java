@@ -33,16 +33,14 @@ public class TandaDaoImpl implements TandaDao {
         ContentValues values = new ContentValues();
         db.delete(Contract.TABLE_NAME_TANDA,null,null);
 
-
-        //ojo
+        values.put(Contract.Column.TANDA_NUMERO, tanda.getNumero());
         values.put(Contract.Column.TANDA_NOMBRE, tanda.getNombre());
-        values.put(Contract.Column.TANDA_NUMERO_TANDA, tanda.getNroTanda());
-        values.put(Contract.Column.TANDA_FECHA, tanda.getFecha().getDate());
-        values.put(Contract.Column.TANDA_HORA_INICIO, tanda.getHoraInicio().getHours());
-        values.put(Contract.Column.TANDA_HORA_FIN,tanda.getHoraFin().getHours());
+        values.put(Contract.Column.TANDA_FECHA, tanda.getFecha());
+        values.put(Contract.Column.TANDA_HORA_INICIAL, tanda.getHoraInicial());
+        values.put(Contract.Column.TANDA_HORA_FINAL,tanda.getHoraFinal());
 
         Log.d("REGISTRO -->", tanda.toString());
-        db.insertWithOnConflict(Contract.TABLE_NAME_PROGRAMA, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.insertWithOnConflict(Contract.TABLE_NAME_TANDA, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
 
         db.close();
@@ -65,23 +63,17 @@ public class TandaDaoImpl implements TandaDao {
 
             cursor.moveToNext();
 
+            int indxNumero = cursor.getColumnIndex(Contract.Column.TANDA_NUMERO);
             int indxNombre = cursor.getColumnIndex(Contract.Column.TANDA_NOMBRE);
-            int indxNroTanda = cursor.getColumnIndex(Contract.Column.TANDA_NUMERO_TANDA);
             int indxFecha = cursor.getColumnIndex(Contract.Column.TANDA_FECHA);
-            int indxHoraInicio = cursor.getColumnIndex(Contract.Column.TANDA_HORA_INICIO);
-            int indxHoraFin = cursor.getColumnIndex(Contract.Column.TANDA_HORA_FIN);
+            int indxHoraInicial = cursor.getColumnIndex(Contract.Column.TANDA_HORA_INICIAL);
+            int indxHoraFinal = cursor.getColumnIndex(Contract.Column.TANDA_HORA_FINAL);
 
+            tanda.setNumero((long) cursor.getInt(indxNumero));
             tanda.setNombre(cursor.getString(indxNombre));
-            tanda.setNroTanda(cursor.getInt(indxNroTanda));
-            Date fecha = new Date();
-            fecha.setDate(cursor.getInt(indxFecha));
-            tanda.setFecha(fecha);
-            Date horaInicio = new Date();
-            horaInicio.setDate(cursor.getInt(indxHoraInicio));
-            tanda.setHoraInicio(horaInicio);
-            Date horaFin = new Date();
-            horaFin.setDate(cursor.getInt(indxHoraFin));
-            tanda.setHoraFin(horaFin);
+            tanda.setFecha(cursor.getString(indxFecha));
+            tanda.setHoraInicial(cursor.getInt(indxHoraInicial));
+            tanda.setHoraFinal(cursor.getInt(indxHoraFinal));
             Log.d("SE HA CONSULTADO: ", "Tanda: " + tanda.toString());
 
         }else{

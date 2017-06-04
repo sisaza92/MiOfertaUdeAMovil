@@ -60,18 +60,18 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.GRUPO_HORARIO,
                         Contract.Column.GRUPO_NOMBRE_PROFESOR
                 );
-        //ojo
+
         String sql4=String
-                .format("create table %s(%s text,%s int,%s int, %s int, %s int)",
+                .format("create table %s(%s int,%s text,%s text, %s int, %s int)",
                         Contract.TABLE_NAME_TANDA,
+                        Contract.Column.TANDA_NUMERO,
                         Contract.Column.TANDA_NOMBRE,
-                        Contract.Column.TANDA_NUMERO_TANDA,
                         Contract.Column.TANDA_FECHA,
-                        Contract.Column.TANDA_HORA_INICIO,
-                        Contract.Column.TANDA_HORA_FIN
+                        Contract.Column.TANDA_HORA_INICIAL,
+                        Contract.Column.TANDA_HORA_FINAL
                 );
 
-        // cambiar fechaNaciomiento a tipo Date
+
         String sql5=String
                 .format("create table %s(%s text,%s text,%s text,%s text,%s text)",
                         Contract.TABLE_NAME_ESTUDIANTE,

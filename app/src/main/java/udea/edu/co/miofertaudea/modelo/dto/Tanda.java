@@ -82,4 +82,13 @@ public class Tanda {
                 ", horaFinal=" + horaFinal +
                 '}';
     }
+
+    public String toSringHoraInicial(){
+        return   (horaInicial/100 +":"+horaInicial%100);
+    }
+    public String toSringHoraFinal(){
+        return   (horaFinal/100 +":"+horaInicial%100);
+    }
+
+
 }

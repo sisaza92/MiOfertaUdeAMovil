@@ -57,11 +57,11 @@ public class Contract {
          * Constantes que especifican los nombres de las columnas de la tabla tanda
          */
 
+        public static final String TANDA_NUMERO = "numero";
         public static final String TANDA_NOMBRE = "nombre";
-        public static final String TANDA_NUMERO_TANDA = "nroTanda";
         public static final String TANDA_FECHA = "fecha";
-        public static final String TANDA_HORA_INICIO = "horaInicio";
-        public static final String TANDA_HORA_FIN = "horaFin";
+        public static final String TANDA_HORA_INICIAL = "horaInicial";
+        public static final String TANDA_HORA_FINAL = "horaFinal";
 
 
         /**
