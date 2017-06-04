@@ -9,7 +9,7 @@ import udea.edu.co.miofertaudea.util.ContextProvider;
 /**
  * Esta clase es la encargada de realizar operaciones de creacion  y actualizacion de las tablas
  * en la base de datos del dispositivo.
- * @author Created by Santiago Ramirez.
+ * @author Santiago
  */
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -32,7 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db){
         Log.d("REGISTRO -->"," CLASE: DbHelper METODO: onCreate");
 
-        String sql1=String
+        String sqlMateriaOfertada=String
                 .format("create table %s(%s int,%s text, %s int, %s text, %s text)",
                         Contract.TABLE_NAME_MATERIA_OFERTADA,
                         Contract.Column.MATERIA_OFERTADA_CODIGO_MATERIA,
@@ -42,14 +42,15 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.MATERIA_OFERTADA_HORARIO
                 );
 
-        String sql2=String
+        String sqlPrograma=String
                 .format("create table %s(%s long,%s text, %s text)",
                         Contract.TABLE_NAME_PROGRAMA,
                         Contract.Column.PROGRAMA_CODIGO_PROGRAMA,
                         Contract.Column.PROGRAMA_NOMBRE_PROGRAMA,
                         Contract.Column.PROGRAMA_ESTADO
                 );
-        String sql3=String
+
+        String sqlGrupo=String
                 .format("create table %s(%s text,%s text,%s int, %s int, %s text,%s text,%s text)",
                         Contract.TABLE_NAME_GRUPO,
                         Contract.Column.GRUPO_ID_MATERIA,
@@ -61,7 +62,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.GRUPO_NOMBRE_PROFESOR
                 );
 
-        String sql4=String
+        String sqlTanda=String
                 .format("create table %s(%s int,%s text,%s text, %s int, %s int)",
                         Contract.TABLE_NAME_TANDA,
                         Contract.Column.TANDA_NUMERO,
@@ -72,7 +73,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 );
 
 
-        String sql5=String
+        String sqlEstudiante=String
                 .format("create table %s(%s text,%s text,%s text,%s text,%s text)",
                         Contract.TABLE_NAME_ESTUDIANTE,
                         Contract.Column.ESTUDIANTE_CEDULA_ESTUDIANTE,
@@ -82,24 +83,37 @@ public class DbHelper extends SQLiteOpenHelper {
                         Contract.Column.ESTUDIANTE_EMAL
                 );
 
+        String sqlImpedimento=String
+                .format("create table %s(%s long,%s text, %s text)",
+                        Contract.TABLE_NAME_IMPEDIMENTO,
+                        Contract.Column.IMPEDIMENTO_SEMESTRE,
+                        Contract.Column.IMPEDIMENTO_TIPO,
+                        Contract.Column.IMPEDIMENTO_NOMBRE
+                );
+
+
+
         //Sentencia para crear tabla
-        Log.d(TAG, "onCreate with SQL: " + sql1);
-        db.execSQL(sql1);//Ejecución de la sentencia sq1
+        Log.d(TAG, "onCreate with SQL: " + sqlMateriaOfertada);
+        db.execSQL(sqlMateriaOfertada);//Ejecución de la sentencia sqlMateriaOfertada
 
         //Sentencia para crear tabla Programa
-        Log.d(TAG, "onCreate with SQL: " + sql2);
-        db.execSQL(sql2);//Ejecución de la sentencia sq2
+        Log.d(TAG, "onCreate with SQL: " + sqlPrograma);
+        db.execSQL(sqlPrograma);//Ejecución de la sentencia sqlPrograma
 
         //Sentencia para crear tabla grupo
-        Log.d(TAG, "onCreate with SQL: " + sql3);
-        db.execSQL(sql3);//Ejecución de la sentencia sq3
+        Log.d(TAG, "onCreate with SQL: " + sqlGrupo);
+        db.execSQL(sqlGrupo);//Ejecución de la sentencia sqlGrupo
 
         //Sentencia para crear tabla grupo
-        Log.d(TAG, "onCreate with SQL: " + sql4);
-        db.execSQL(sql4);//Ejecución de la sentencia sq4
+        Log.d(TAG, "onCreate with SQL: " + sqlTanda);
+        db.execSQL(sqlTanda);//Ejecución de la sentencia sqlTanda
 
         //Sentencia para crear tabla Estudiante
-        db.execSQL(sql5);//Ejecución de la sentencia sq5
+        db.execSQL(sqlEstudiante);//Ejecución de la sentencia sqlEstudiante
+
+        //Sentencia para crear tabla Impedimento
+        db.execSQL(sqlImpedimento);//Ejecución de la sentencia sqlImpedimento
 
     }
 
@@ -118,6 +132,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla estudiante
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla Impedimento
         onCreate(db);//Crear Tabla de nuevo
 
     }
@@ -129,7 +144,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla estudiante
-        onCreate(db);//Crear Tabla de nuevo
+        onCreate(db);//Crear Toda la base de datos nuevamente
     }
 
 
