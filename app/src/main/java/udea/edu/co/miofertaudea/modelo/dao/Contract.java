@@ -16,6 +16,7 @@ public class Contract {
     public static final String TABLE_NAME_PROGRAMA = "programa";
     public static final String TABLE_NAME_TANDA = "tanda";
     public static final String TABLE_NAME_ESTUDIANTE = "estudiante";
+    public static final String TABLE_NAME_IMPEDIMENTO = "impedimento";
 
     /**
      * En esta clase se Colocan todas las constantes referentes a los nombres de
@@ -72,5 +73,14 @@ public class Contract {
         public static final String ESTUDIANTE_APELLIDOS = "apellidos";
         public static final String ESTUDIANTE_FECHA_NACIMIENTO = "fechaNacimiento";
         public static final String ESTUDIANTE_EMAL = "email";
+
+        /**
+         * Constantes que especifican los nombres de las columnas de la tabla estudiante
+         */
+        public static final String IMPEDIMENTO_SEMESTRE = "semestre";
+        public static final String IMPEDIMENTO_TIPO = "tipo";
+        public static final String IMPEDIMENTO_NOMBRE = "nombre";
+
+
     }
 }
