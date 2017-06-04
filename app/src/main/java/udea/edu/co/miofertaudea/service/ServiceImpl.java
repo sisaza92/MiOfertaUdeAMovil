@@ -16,16 +16,19 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.EstudianteDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.GrupoDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.ImpedimentoDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.ProgramaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.TandaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.EstudianteDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.GrupoDao;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ImpedimentoDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ProgramaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.TandaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
 import udea.edu.co.miofertaudea.modelo.dto.Grupo;
+import udea.edu.co.miofertaudea.modelo.dto.Impedimento;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.modelo.dto.Tanda;
@@ -98,6 +101,18 @@ public class ServiceImpl extends IntentService {
                                 +semestre);
 
                         obtenerTanda(cedulaEstudiante, semestre);
+
+                        break;
+
+                    case "obtenerImpedimentos":
+                        cedulaEstudiante = intent.getStringExtra("cedulaEstudiante");
+                        Long programa =  intent.getLongExtra("codigoPrograma",0);
+                        Log.d("IMPORTANTE -->","Al servicio obtenerImpedimentos le ha llegado la cedulaEstudiante: "
+                                +cedulaEstudiante);
+                        Log.d("IMPORTANTE -->","Al servicio obtenerTanda le ha llegado el codigoPrograma: "
+                                +programa);
+
+                        obtenerImpedimentos(cedulaEstudiante, programa);
 
                         break;
                 }
@@ -252,5 +267,28 @@ public class ServiceImpl extends IntentService {
         });
     }
 
+    private void obtenerImpedimentos(String cedulaEstudiante, Long programa) {
+        Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerImpedimentos");
+        ServiceFactory.getClienteRest().obtenerImpedimentos(cedulaEstudiante, programa, new Callback<List<Impedimento>>() {
+            @Override
+            public void success(List<Impedimento> impedimentos, Response response) {
 
+                for(Impedimento impedimento:impedimentos){
+                    Log.d("REGISTRO -->",impedimento.toString());
+                }
+                ImpedimentoDao impedimentoDao = new ImpedimentoDaoImpl();
+
+                impedimentoDao.saveImpedimentos(impedimentos);
+                int size = impedimentos.size();
+                Toast.makeText(ServiceImpl.this, "Impedimentos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_IMPEDIMENTOS");
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
 }

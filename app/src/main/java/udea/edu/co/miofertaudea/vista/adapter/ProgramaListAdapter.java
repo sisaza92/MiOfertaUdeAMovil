@@ -75,7 +75,7 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
             public void onClick(View v) {
 
                 Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
-                String idPrograma = "" + listaProgramas.get(position).getCodigoPrograma();
+                Programa program = listaProgramas.get(position);
 
                 Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener se tiene el estudiante: "+
                 estudiante.toString());
@@ -83,7 +83,7 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
 
                 // se agrega la informacion a enviar a la actividad
                 listarMaterias.putExtra("ESTUDIANTE",estudiante);
-                listarMaterias.putExtra("idPrograma", idPrograma);
+                listarMaterias.putExtra("PROGRAMA", program);
                 listarMaterias.putExtra("semestreAcademico",semestreAcademico);
 
                 // se inicia la otra actividad

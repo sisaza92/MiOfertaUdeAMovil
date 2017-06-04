@@ -20,12 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import udea.edu.co.miofertaudea.R;
+import udea.edu.co.miofertaudea.modelo.dao.Implementations.ImpedimentoDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.MateriaOfertadaDaoImpl;
 import udea.edu.co.miofertaudea.modelo.dao.Implementations.TandaDaoImpl;
+import udea.edu.co.miofertaudea.modelo.dao.Interfaces.ImpedimentoDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.MateriaOfertadaDao;
 import udea.edu.co.miofertaudea.modelo.dao.Interfaces.TandaDao;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
+import udea.edu.co.miofertaudea.modelo.dto.Impedimento;
 import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
+import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.modelo.dto.Tanda;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
 import udea.edu.co.miofertaudea.vista.adapter.MateriaOfertadaListAdapter;
@@ -36,9 +40,10 @@ public class Oferta_Ppal extends AppCompatActivity {
     private IntentFilter filtroMaterias,filtroTanda,filtroImpedimento;
     private BroadcastReceiver receptorMaterias,receptorTanda,receptorImpedimento;
 
+    private TextView mtVOfertaPPName;
 
     private TextView mTVOfertaPPImpedimentos;
-    private TextView mtVOfertaPPName;
+
 
 
     //TextView para la tanda
@@ -47,7 +52,8 @@ public class Oferta_Ppal extends AppCompatActivity {
 
 
     private Estudiante estudiante;
-    Long semestreAcademico;
+    private Long semestreAcademico;
+    private Programa programa;
 
 
     @Override
@@ -71,9 +77,9 @@ public class Oferta_Ppal extends AppCompatActivity {
         registerReceiver(receptorTanda, filtroTanda);
 
         // filfro para el servicio de los impedimentos de matricula
-        //filtroImpedimento = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
-        //receptorImpedimento =  new TimelineReceiverTanda();
-        //registerReceiver(receptorImpedimento, filtroImpedimento);
+        filtroImpedimento = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_IMPEDIMENTOS");
+        receptorImpedimento =  new TimelineReceiverImpedimentos();
+        registerReceiver(receptorImpedimento, filtroImpedimento);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
@@ -85,10 +91,13 @@ public class Oferta_Ppal extends AppCompatActivity {
 
 
         estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
+        programa = (Programa) getIntent().getExtras().getSerializable("PROGRAMA");
         semestreAcademico =  getIntent().getLongExtra("semestreAcademico",0);
+
         Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
                 " llego el estudiante: "+ estudiante.toString());
-
+        Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
+                " llego el programa: "+ programa.toString());
         Log.d("REGISTRO -->","CLASE: Oferta_Ppal      METODO: onCreate ----> en el intent" +
                 " llego el semestreAcaemico: "+ semestreAcademico);
 
@@ -129,8 +138,8 @@ public class Oferta_Ppal extends AppCompatActivity {
             //listaMaterias.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
             recyclerView.setAdapter(new MateriaOfertadaListAdapter( this, (ArrayList<MateriaOfertada>) materiasOfertadas));
         }else{
-
-            String idPrograma =  getIntent().getStringExtra("idPrograma");
+            Long machete = programa.getCodigoPrograma();
+            String idPrograma = machete.toString();
             String idEstudiante = estudiante.getCedula();
 
             Log.d("REGISTRO -->", "CLASE: Oferta_Ppal   METODO: getAllMateriasOfertadas");
@@ -148,13 +157,26 @@ public class Oferta_Ppal extends AppCompatActivity {
      */
     private void getTanda(){
 
-        filtroMaterias = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
             Intent obtenerTanda = new Intent(Oferta_Ppal.this, ServiceImpl.class);
             obtenerTanda.putExtra("accion", "obtenerTanda");
             obtenerTanda.putExtra("cedulaEstudiante",estudiante.getCedula());
             obtenerTanda.putExtra("semestreAcademico",semestreAcademico);
 
             startService(obtenerTanda);
+
+    }
+
+    /**
+     * Metodo que Crea un IntentService para llamar al servicio que obtine la informacion de la tanda del estudiante
+     */
+    private void getImpedimentos(){
+
+        Intent obtenerImpedimentos = new Intent(Oferta_Ppal.this, ServiceImpl.class);
+        obtenerImpedimentos.putExtra("accion", "obtenerImpedimentos");
+        obtenerImpedimentos.putExtra("cedulaEstudiante",estudiante.getCedula());
+        obtenerImpedimentos.putExtra("codigoPrograma",programa.getCodigoPrograma());
+
+        startService(obtenerImpedimentos);
 
     }
 
@@ -188,7 +210,8 @@ public class Oferta_Ppal extends AppCompatActivity {
                 mTVOfertaPPTandaFecha.setText(tanda.getFecha());
                 mTVOfertaPPTandaHoraInicial.setText(tanda.toSringHoraInicial());
                 mTVOfertaPPTandaHoraFinal.setText(tanda.toSringHoraFinal());
-                getAllMateriasOfertadas();
+
+                getImpedimentos();
 
             }else{
                 Log.d("CRITICO-->", "CLASE: TimelineReceiverTanda" +
@@ -197,6 +220,24 @@ public class Oferta_Ppal extends AppCompatActivity {
         }
     }
 
+    class TimelineReceiverImpedimentos extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("REGISTRO -->", "CLASE: TimelineReceiverImpedimentos   METODO: onReceive");
+
+            ImpedimentoDao impedimentoDao = new ImpedimentoDaoImpl();
+            List<Impedimento> impedimentos = impedimentoDao.getImpedimentos();
+
+            mTVOfertaPPImpedimentos.setText(impedimentos.toString());
+
+            getAllMateriasOfertadas();
+
+
+
+
+        }
+    }
 
     /**
      * Initializing collapsing toolbar

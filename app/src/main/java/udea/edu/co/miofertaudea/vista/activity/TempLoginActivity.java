@@ -157,7 +157,7 @@ public class TempLoginActivity extends AppCompatActivity {
                 if(programas.size()==1) {
 
                     Intent listarMaterias = new Intent(getContext(), Oferta_Ppal.class);
-                    String idPrograma = "" + programas.get(0).getCodigoPrograma();
+                    Programa program = programas.get(0);
 
                     Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener se tiene el estudiante: "+
                             estudiante.toString());
@@ -168,7 +168,7 @@ public class TempLoginActivity extends AppCompatActivity {
 
                     // se agrega la informacion a enviar a la actividad
                     listarMaterias.putExtra("ESTUDIANTE",estudiante);
-                    listarMaterias.putExtra("idPrograma", idPrograma);
+                    listarMaterias.putExtra("PROGRAMA", program);
                     listarMaterias.putExtra("semestreAcademico",semestreAcademico);
 
                     // se inicia la otra actividad

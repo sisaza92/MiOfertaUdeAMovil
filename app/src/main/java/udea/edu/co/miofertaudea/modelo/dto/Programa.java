@@ -1,10 +1,12 @@
 package udea.edu.co.miofertaudea.modelo.dto;
 
+import java.io.Serializable;
+
 /**
  * Representación Objetual de un Programa.
  * @author Santiago Ramirez
  */
-public class Programa {
+public class Programa implements Serializable {
     
     private long codigoPrograma;
     private String nombrePrograma;

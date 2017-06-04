@@ -53,11 +53,11 @@ public interface ServiceInterface  {
     public void obtenerTanda(@Path("cedulaEstudiante") String cedula,@Path("semestre") Long semestre,Callback<Tanda> tanda);
 
     /**
-     * Retorna los impedimientos el programa, no está creado, deberá retornar la
-     * estructura: semestre, impedimiento
+     * Retorna los impedimientos en formato json el programa, no está creado, deberá retornar la
+     * estructura: Long semestre, String tipo,String nombre
      */
-    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerImpedimentos/{cedulaEstudiante}")
-    public void obtenerImpedimentos(@Path("cedulaEstudiante") String cedula,Callback<List<Impedimento>> impedimentos);
+    @GET(URL_CONTEXT_PATH+URL_SERVICE+"/obtenerImpedimentos/{cedulaEstudiante}/{programa}")
+    public void obtenerImpedimentos(@Path("cedulaEstudiante") String cedula,@Path("programa") Long programa,Callback<List<Impedimento>> impedimentos);
 
     /**
      * Retorna  el un objeto Estudiante en formato json, no está creado, deberá retornar la

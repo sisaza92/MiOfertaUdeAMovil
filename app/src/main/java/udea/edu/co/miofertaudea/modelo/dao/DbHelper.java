@@ -144,6 +144,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_GRUPO);//Borrar datos tabla grupo
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_TANDA);//Borrar datos tabla tanda
         db.execSQL("drop table if exists "+ Contract.TABLE_NAME_ESTUDIANTE);//Borrar datos tabla estudiante
+        db.execSQL("drop table if exists "+ Contract.TABLE_NAME_IMPEDIMENTO);//Borrar datos tabla estudiante
         onCreate(db);//Crear Toda la base de datos nuevamente
     }
 
