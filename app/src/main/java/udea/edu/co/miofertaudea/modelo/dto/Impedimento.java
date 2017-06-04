@@ -8,16 +8,16 @@ public class Impedimento {
     
     private Long semestre;
     private String tipo;
-    private String impedimento;
+    private String nombre;
 
     public Impedimento(){
 
     }
 
-    public Impedimento(Long semestre, String tipo, String impedimento) {
+    public Impedimento(Long semestre, String tipo, String nombre) {
         this.semestre = semestre;
         this.tipo = tipo;
-        this.impedimento = impedimento;
+        this.nombre = nombre;
     }
 
     public Long getSemestre() {
@@ -36,12 +36,12 @@ public class Impedimento {
         this.tipo = tipo;
     }
 
-    public String getImpedimento() {
-        return impedimento;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setImpedimento(String impedimento) {
-        this.impedimento = impedimento;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Impedimento {
         return "Impedimento{" +
                 "semestre=" + semestre +
                 ", tipo='" + tipo + '\'' +
-                ", impedimento='" + impedimento + '\'' +
+                ", nombre='" + nombre + '\'' +
                 '}';
     }
 }
