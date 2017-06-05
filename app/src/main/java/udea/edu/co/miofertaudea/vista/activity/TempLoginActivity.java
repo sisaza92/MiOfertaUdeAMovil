@@ -71,6 +71,13 @@ public class TempLoginActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        //unregisterReceiver(receptorEstudiante);
+        //unregisterReceiver(receptorProgramas);
+    }
+
 
     public void consultarOferta(View view) {
         String cedula = eTloginCedulaEstudiante.getText().toString();

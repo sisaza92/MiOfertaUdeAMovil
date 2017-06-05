@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:hint="Ingrese Cedula"
         android:imeOptions="actionSend"
+        android:inputType="number"
         android:gravity="center"
         android:id="@+id/ETloginCedulaEstudiante"/>
 
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:hint="Ingrese El Semestre Academico"
         android:imeOptions="actionSend"
+        android:inputType="number"
         android:gravity="center"
         android:id="@+id/ETloginSemestreAcademico"/>
 

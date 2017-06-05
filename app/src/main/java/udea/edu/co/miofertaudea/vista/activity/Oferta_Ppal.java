@@ -127,7 +127,9 @@ public class Oferta_Ppal extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(receptorMaterias);
+        //unregisterReceiver(receptorTanda);
+        //unregisterReceiver(receptorImpedimento);
+        //unregisterReceiver(receptorMaterias);
     }
 
     /**

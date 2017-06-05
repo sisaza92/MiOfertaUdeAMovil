@@ -141,7 +141,7 @@ public class ServiceImpl extends IntentService {
 
                     materiasOfertadasDao.saveAllMaterias(materiasOfertadas);
                     int size = materiasOfertadas.size();
-                    Toast.makeText(ServiceImpl.this, "Materias Recibidas Exitosamente", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ServiceImpl.this, "Materias Recibidas Exitosamente", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_MATERIAS");
                     intent.putExtra("BroadcastType","Materias");
                     sendBroadcast(intent);
@@ -169,7 +169,7 @@ public class ServiceImpl extends IntentService {
 
                 programaDao.saveProgramas(programas);
                 int size = programas.size();
-                Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServiceImpl.this, "Programas Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_PROGRAMAS");
                 sendBroadcast(intent);
             }
@@ -195,7 +195,7 @@ public class ServiceImpl extends IntentService {
 
                 grupoDao.saveAllGrupos(grupos,codigoMateria);
                 int size = grupos.size();
-                Toast.makeText(ServiceImpl.this, "Grupos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServiceImpl.this, "Grupos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_GRUPOS");
                 intent.putExtra("codigoMateria",codigoMateria);
                 sendBroadcast(intent);
@@ -204,7 +204,8 @@ public class ServiceImpl extends IntentService {
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.d("ERROR: ","Fallo al obtener los grupos de la materia");
+                Toast.makeText(ServiceImpl.this, "Fallo al Obtener los grupos de la materia", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -219,13 +220,13 @@ public class ServiceImpl extends IntentService {
             public void success(Estudiante estudiante, Response response) {
                 //TODO quitar for
                 Log.d("REGISTRO -->"," CLASE: ServiceImpl METODO: obtenerInfoEstudiante obtiene" +
-                        " el estudiante: " +estudiante.toString());
+                       " el estudiante: " +estudiante.toString());
 
-                //puede que no este guardando bien
+
                 EstudianteDao estudianteDao = new EstudianteDaoImpl();
 
                 estudianteDao.saveEstudiante(estudiante);
-                Toast.makeText(ServiceImpl.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServiceImpl.this, "Estudiante Recibido Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVO_ESTUDIANTE");
                 intent.putExtra("cedulaEstudiante",estudiante.getCedula());
                 sendBroadcast(intent);
@@ -234,6 +235,9 @@ public class ServiceImpl extends IntentService {
 
             @Override
             public void failure(RetrofitError error) {
+                Log.d("ERROR: ","Fallo al obtener la informacion del estudiante");
+                Toast.makeText(ServiceImpl.this, "Fallo al Obtener la informacion del estudiante", Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -252,7 +256,7 @@ public class ServiceImpl extends IntentService {
                 TandaDao tandaDao = new TandaDaoImpl();
 
                 tandaDao.saveTanda(tanda);
-                Toast.makeText(ServiceImpl.this, "Tanda Recibida Exitosamente", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServiceImpl.this, "Tanda Recibida Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_TANDA");
                 intent.putExtra("BroadcastType","Tanda");
                 //intent.putExtra("cedulaEstudiante",tanda.getCedula());
@@ -262,6 +266,9 @@ public class ServiceImpl extends IntentService {
 
             @Override
             public void failure(RetrofitError error) {
+                Log.d("ERROR: ","Fallo al obtener la Tanda de matricula");
+                Toast.makeText(ServiceImpl.this, "Fallo al Obtener la Tanda de matricula", Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -280,13 +287,16 @@ public class ServiceImpl extends IntentService {
 
                 impedimentoDao.saveImpedimentos(impedimentos);
                 int size = impedimentos.size();
-                Toast.makeText(ServiceImpl.this, "Impedimentos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServiceImpl.this, "Impedimentos Recibidos Exitosamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent("udea.edu.co.miofertaudea.NUEVA_LISTA_IMPEDIMENTOS");
                 sendBroadcast(intent);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                Log.d("ERROR: ","Fallo al obtener los  Impedimentos de matricula");
+                Toast.makeText(ServiceImpl.this, "Fallo al obtener los  Impedimentos de matricula", Toast.LENGTH_LONG).show();
+
 
             }
         });

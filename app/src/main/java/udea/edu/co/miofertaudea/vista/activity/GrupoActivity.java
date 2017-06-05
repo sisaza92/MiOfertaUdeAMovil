@@ -62,6 +62,12 @@ public class GrupoActivity extends AppCompatActivity {
         receptor = new TimelineReceiver();
         registerReceiver(receptor, filtro);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        //unregisterReceiver(receptor);
+
+    }
 
 
     /**
@@ -79,7 +85,6 @@ public class GrupoActivity extends AppCompatActivity {
         startService(listarProgramas);
 
     }
-
 
     class TimelineReceiver extends BroadcastReceiver {
 
