@@ -3,17 +3,20 @@ package udea.edu.co.miofertaudea.vista.activity;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ import udea.edu.co.miofertaudea.modelo.dto.MateriaOfertada;
 import udea.edu.co.miofertaudea.modelo.dto.Programa;
 import udea.edu.co.miofertaudea.modelo.dto.Tanda;
 import udea.edu.co.miofertaudea.service.ServiceImpl;
+import udea.edu.co.miofertaudea.vista.adapter.ImpedimentoListAdapter;
 import udea.edu.co.miofertaudea.vista.adapter.MateriaOfertadaListAdapter;
 
 public class Oferta_Ppal extends AppCompatActivity {
@@ -54,7 +58,7 @@ public class Oferta_Ppal extends AppCompatActivity {
     private Estudiante estudiante;
     private Long semestreAcademico;
     private Programa programa;
-
+    private List<Impedimento> impedimentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class Oferta_Ppal extends AppCompatActivity {
         receptorMaterias =  new TimelineReceiverMaterias();
         registerReceiver(receptorMaterias, filtroMaterias);
 
+
         // filfro para el servicio de la tanda de matricula
         filtroTanda = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_TANDA");
         receptorTanda =  new TimelineReceiverTanda();
@@ -82,7 +87,7 @@ public class Oferta_Ppal extends AppCompatActivity {
         registerReceiver(receptorImpedimento, filtroImpedimento);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
+        mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVImpedimentos);
         mtVOfertaPPName = (TextView) findViewById(R.id.tVOfertaPPName);
 
         mTVOfertaPPTanda = (TextView) findViewById(R.id.tVTanda);
@@ -178,6 +183,10 @@ public class Oferta_Ppal extends AppCompatActivity {
 
     }
 
+    public void setImpedimentos(List<Impedimento> impedimentos) {
+        this.impedimentos = impedimentos;
+    }
+
     class TimelineReceiverMaterias extends BroadcastReceiver {
 
         @Override
@@ -225,16 +234,30 @@ public class Oferta_Ppal extends AppCompatActivity {
             ImpedimentoDao impedimentoDao = new ImpedimentoDaoImpl();
             List<Impedimento> impedimentos = impedimentoDao.getImpedimentos();
 
-            mTVOfertaPPImpedimentos.setText(impedimentos.toString());
-
+            if (impedimentos.size()>0){
+                mTVOfertaPPImpedimentos.setVisibility(View.VISIBLE);
+            }else{
+                mTVOfertaPPImpedimentos.setVisibility(View.INVISIBLE);
+            }
+            setImpedimentos(impedimentos);
             getAllMateriasOfertadas();
-
-
-
-
         }
     }
 
+    public void onClickShowImpedimentos(View view){
+
+        ImpedimentoListAdapter impedimentoListAdapter = new ImpedimentoListAdapter(this, (ArrayList<Impedimento>) impedimentos);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(Oferta_Ppal.this);
+
+        builderSingle.setTitle("Impedimentos de matricula");
+        builderSingle.setAdapter(impedimentoListAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builderSingle.show();
+    }
     /**
      * Initializing collapsing toolbar
      * Will show and hide the toolbar title on scroll

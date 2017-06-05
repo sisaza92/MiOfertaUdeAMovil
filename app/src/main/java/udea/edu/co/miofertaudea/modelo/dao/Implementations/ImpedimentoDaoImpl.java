@@ -40,7 +40,7 @@ public class ImpedimentoDaoImpl implements ImpedimentoDao  {
 
             values.put(Contract.Column.IMPEDIMENTO_SEMESTRE, impedimento.getSemestre());
             values.put(Contract.Column.IMPEDIMENTO_TIPO, impedimento.getTipo());
-            values.put(Contract.Column.IMPEDIMENTO_NOMBRE, impedimento.getSemestre());
+            values.put(Contract.Column.IMPEDIMENTO_NOMBRE, impedimento.getNombre());
 
 
             Log.d("REGISTRO -->", impedimento.toString());

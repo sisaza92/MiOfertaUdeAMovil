@@ -7,6 +7,29 @@
     android:background="@android:color/white"
     android:fitsSystemWindows="true">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -37,6 +60,22 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />
 
+                <Button
+                    android:onClick="onClickShowImpedimentos"
+                    android:id="@+id/tVImpedimentos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_light"
+                    android:text="Presione para ver sus Impedimentos de Matricula"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18dp"
+                    android:visibility="visible" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,10 +92,10 @@
                         android:textSize="@dimen/backdrop_title" />
 
                     <TextView
+                        android:id="@+id/tVOfertaPPName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:id="@+id/tVOfertaPPName"
                         android:text="UserName"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
@@ -65,12 +104,12 @@
                         android:id="@+id/tVTanda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textColorHighlight="@color/black"
                         android:text="Tanda:"
-                        />
+                        android:textColorHighlight="@color/black"
+                        android:textSize="14dp" />
 
                 </LinearLayout>
+
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
@@ -84,60 +123,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColorHighlight="@color/black"
-                    android:text="Impedimentos:"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/tVOfertaPPImpedimentos"
-                    />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="10dp"
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:scrollbars="vertical" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
 
