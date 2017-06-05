@@ -7,7 +7,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,10 +36,11 @@ import udea.edu.co.miofertaudea.vista.adapter.ProgramaListAdapter;
  */
 public class GrupoActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
     private IntentFilter filtro;
     private BroadcastReceiver receptor;
 
-    ListView listaGrupos;
+//    RecyclerView listaGrupos;
     TextView cabecera;
 
     @Override
@@ -43,9 +49,15 @@ public class GrupoActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo_layout);
-        listaGrupos = (ListView) findViewById(R.id.listViewGrupo);
+        initCollapsingToolbar();
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_viewGrupos);
         cabecera = (TextView)findViewById(R.id.textViewCabeceraGrupo);
         filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_GRUPOS");
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+        recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         String codigoMateria =  getIntent().getStringExtra("codigoMateria");
         String nombreMateria = getIntent().getStringExtra("nombreMateria");
@@ -106,9 +118,40 @@ public class GrupoActivity extends AppCompatActivity {
             }
             Log.d("BROADCAST RECIBIDO", "onReceived");
 
-            listaGrupos.setAdapter(new GrupoListAdapter((Activity) context, (ArrayList<Grupo>) grupos));
+            recyclerView.setAdapter(new GrupoListAdapter((Activity) context, (ArrayList<Grupo>) grupos));
 
         }
     }
 
+    /**
+     * Initializing collapsing toolbar
+     * Will show and hide the toolbar title on scroll
+     */
+    private void initCollapsingToolbar() {
+        final CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(" ");
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.setExpanded(true);
+
+        // hiding & showing the title when toolbar expanded & collapsed
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbar.setTitle("Grrupos Disponibles");
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbar.setTitle("");
+                    isShow = false;
+                }
+            }
+        });
+    }
 }
