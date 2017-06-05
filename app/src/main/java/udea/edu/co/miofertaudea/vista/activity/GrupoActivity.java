@@ -42,6 +42,7 @@ public class GrupoActivity extends AppCompatActivity {
 
 //    RecyclerView listaGrupos;
     TextView cabecera;
+    TextView materia;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class GrupoActivity extends AppCompatActivity {
         initCollapsingToolbar();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_viewGrupos);
         cabecera = (TextView)findViewById(R.id.textViewCabeceraGrupo);
+        materia = (TextView)findViewById(R.id.tVImpedimento1);
+
         filtro = new IntentFilter("udea.edu.co.miofertaudea.NUEVA_LISTA_GRUPOS");
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -64,7 +67,9 @@ public class GrupoActivity extends AppCompatActivity {
 
         //Log.d("IMPORTANTE -->", "CLASE: GrupoActivity   METODO: onCreate" +
         //        " el codigo de la materia que resibe es: "+idMateria);
-        cabecera.setText(nombreMateria + " ("+codigoMateria+")" );
+        cabecera.setText("Grupos");
+
+        materia.setText(nombreMateria + " ("+codigoMateria+")" );
         getGrupos();
     }
 

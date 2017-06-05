@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import udea.edu.co.miofertaudea.R;
 import udea.edu.co.miofertaudea.modelo.dto.Estudiante;
@@ -80,18 +82,25 @@ public class ProgramaListAdapter extends ArrayAdapter<Programa>{
                 Log.d("REGISTRO -->","CLASE: ProgramaListAdapter, METODO: getListener se tiene el estudiante: "+
                 estudiante.toString());
 
+                if(!program.getEstado().equals("Activo")){
 
-                // se agrega la informacion a enviar a la actividad
-                listarMaterias.putExtra("ESTUDIANTE",estudiante);
-                listarMaterias.putExtra("PROGRAMA", program);
-                listarMaterias.putExtra("semestreAcademico",semestreAcademico);
+                    Toast.makeText(v.getContext(), "No se tiene oferta en los programas Cancelados", Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                // se inicia la otra actividad
-                v.getContext().startActivity(listarMaterias);
+                    // se agrega la informacion a enviar a la actividad
+                    listarMaterias.putExtra("ESTUDIANTE", estudiante);
+                    listarMaterias.putExtra("PROGRAMA", program);
+                    listarMaterias.putExtra("semestreAcademico", semestreAcademico);
+
+                    // se inicia la otra actividad
+                    v.getContext().startActivity(listarMaterias);
+                }
 
                 v.setOnClickListener(getListener(position));// TODO: mirar cual de los dos es el que funciona.
                 Log.d("REGISTRO -->","ITEM "+position+" CLIQUEADO");
                 //v.setBackgroundResource(R.color.colorPrimaryDark);
+
             }
         };
         return listener;

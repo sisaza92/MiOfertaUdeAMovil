@@ -92,19 +92,19 @@ android:fitsSystemWindows="true">
             android:textSize="@dimen/backdrop_title" />
 
         <TextView
-            android:id="@+id/tVOfertaPPName"
+            android:id="@+id/tVImpedimento1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="UserName"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="@dimen/backdrop_subtitle" />
 
         <TextView
-            android:id="@+id/tVTanda"
+            android:id="@+id/tVImpedimento2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tanda:"
+            android:text=":"
             android:textColorHighlight="@color/black"
             android:textSize="14dp" />
 
