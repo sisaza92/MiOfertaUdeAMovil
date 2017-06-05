@@ -74,13 +74,10 @@ public class Tanda {
 
     @Override
     public String toString() {
-        return "Tanda{" +
-                "numero=" + numero +
-                ", nombre='" + nombre + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", horaInicial=" + horaInicial +
-                ", horaFinal=" + horaFinal +
-                '}';
+        return "Tanda:" + numero +
+                "\t  Fecha: " + fecha +
+                "\t  de " + toSringHoraInicial() +
+                "\t  a " + toSringHoraFinal();
     }
 
     public String toSringHoraInicial(){

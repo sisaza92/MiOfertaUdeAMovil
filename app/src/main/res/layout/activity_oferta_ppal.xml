@@ -61,6 +61,15 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
 
+                    <TextView
+                        android:id="@+id/tVTanda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColorHighlight="@color/black"
+                        android:text="Tanda:"
+                        />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -88,79 +97,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColorHighlight="@color/black"
-                android:text="Tanda:"
-                />
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColorHighlight="@color/black"
-                android:text="Fecha:"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#Tanda"
-                android:id="@+id/tVOfertaPPTandaFecha"
-                />
-        </LinearLayout>
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColorHighlight="@color/black"
-                android:text="Hora Inicial: "
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#Tanda"
-                android:id="@+id/tVOfertaPPTandaHoraInicial"
-                />
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColorHighlight="@color/black"
-                    android:text="Hora Final: "
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#Tanda"
-                    android:id="@+id/tVOfertaPPTandaHoraFinal"
-                    />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

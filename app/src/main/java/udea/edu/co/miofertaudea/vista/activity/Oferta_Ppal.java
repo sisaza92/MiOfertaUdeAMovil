@@ -47,7 +47,7 @@ public class Oferta_Ppal extends AppCompatActivity {
 
 
     //TextView para la tanda
-    private TextView mTVOfertaPPTandaFecha,mTVOfertaPPTandaHoraInicial,mTVOfertaPPTandaHoraFinal;
+    private TextView mTVOfertaPPTanda;
 
 
 
@@ -85,9 +85,7 @@ public class Oferta_Ppal extends AppCompatActivity {
         mTVOfertaPPImpedimentos = (TextView) findViewById(R.id.tVOfertaPPImpedimentos);
         mtVOfertaPPName = (TextView) findViewById(R.id.tVOfertaPPName);
 
-        mTVOfertaPPTandaFecha = (TextView) findViewById(R.id.tVOfertaPPTandaFecha);
-        mTVOfertaPPTandaHoraInicial = (TextView) findViewById(R.id.tVOfertaPPTandaHoraInicial);
-        mTVOfertaPPTandaHoraFinal = (TextView) findViewById(R.id.tVOfertaPPTandaHoraFinal);
+        mTVOfertaPPTanda = (TextView) findViewById(R.id.tVTanda);
 
 
         estudiante =(Estudiante) getIntent().getExtras().getSerializable("ESTUDIANTE");
@@ -207,9 +205,7 @@ public class Oferta_Ppal extends AppCompatActivity {
                 Log.d("IMPORTANTE-->", "CLASE: TimelineReceiverTanda" +
                         "   METODO: SI ESTA TRAYENDO TANDA DE LA BD: " +tanda.toString());
                 // logica cuando llegue la tanda
-                mTVOfertaPPTandaFecha.setText(tanda.getFecha());
-                mTVOfertaPPTandaHoraInicial.setText(tanda.toSringHoraInicial());
-                mTVOfertaPPTandaHoraFinal.setText(tanda.toSringHoraFinal());
+                mTVOfertaPPTanda.setText(tanda.toString());
 
                 getImpedimentos();
 
